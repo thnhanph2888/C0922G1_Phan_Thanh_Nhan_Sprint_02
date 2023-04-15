@@ -62,10 +62,16 @@ create table food (
    id int primary key,
    name varchar(100),
    price double,
-   quantity int, 
+   rate double,
    description varchar(255),
    type_of_food_id int,
    foreign key (type_of_food_id) references type_of_food(id)
+);
+
+create table drinks (
+   id int primary key,
+   name varchar(100),
+   price double
 );
 
 create table floor (
@@ -102,8 +108,11 @@ create table `order` (
 create table order_detail (
   order_id int,
   food_id int,
-  foreign key (order_id) REFERENCES `order`(id),
-  FOREIGN KEY (food_id) REFERENCES food(id)
+  drinks_id int,
+  quantity int,
+  foreign key (drinks_id) references drinks(id),
+  foreign key (order_id) references `order`(id),
+  foreign key (food_id) references food(id)
 );
 
 
