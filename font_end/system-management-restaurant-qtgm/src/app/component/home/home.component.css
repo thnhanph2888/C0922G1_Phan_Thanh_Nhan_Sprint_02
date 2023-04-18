@@ -1,0 +1,61 @@
+.my-row {
+  --bs-gutter-x: 0rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.carousel-item img {
+  height: auto;
+  max-height: calc(90vh); /* Giả sử bạn muốn giữ khoảng cách 200px ở hai bên carousel */
+  max-width: 100%;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+  object-fit: cover;
+}
+
+.my-btn-absolute {
+  position: absolute;
+  bottom: 0;
+}
+
+.my-text-absolute {
+  background-color: rgba(0, 0, 0, 0.45);
+  position: absolute;
+  top: 30%;
+  left: 37%;
+  width: 70%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+}
+
+.parent {
+  position: relative;
+}
+
+.banner-text {
+  font-family: Arial sans-serif;
+  max-width: 100%;
+  font-weight: bold;
+  font-size: 40px;
+  color: white;
+}
+
+.my-btn-red {
+  font-weight: bold;
+  font-size: 90%;
+  padding: 1em;
+  color: #ffffff;
+  border-radius: 1em;
+  background-color: #ee0000;
+}
+
+.my-btn-red:hover {
+  font-weight: bold;
+  font-size: 100%;
+  padding: 1em;
+  color: #ffffff;
+  border-radius: 1em;
+  background-color: #ff0909;
+}

@@ -16,6 +16,7 @@ import { CustomerEditComponent } from './component/customer/customer-edit/custom
 import { FoodListComponent } from './component/food/food-list/food-list.component';
 import { FoodEditComponent } from './component/food/food-edit/food-edit.component';
 import {FoodCreateComponent} from './component/food/food-create/food-create.component';
+import { HomeComponent } from './component/home/home.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {FoodCreateComponent} from './component/food/food-create/food-create.comp
     CustomerEditComponent,
     FoodCreateComponent,
     FoodListComponent,
-    FoodEditComponent
+    FoodEditComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
