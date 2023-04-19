@@ -1,5 +1,43 @@
-.pagination {
-  display: inline-block;
+
+.pagination a {
+  border-radius: 5px;
+  margin: 2px;
+  color: black;
+  float: left;
+  padding: 2px 8px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #32CD32;
+  font-size: 17px;
+}
+
+.pagination a.active {
+  background-color: #32CD32;
+  color: white;
+  border: 1px solid black;
+  padding: 2px 8px;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #32CD32;
+  color: white;
+  padding: 2px 8px;
+}
+
+.pagination button:hover:not(.active) {
+  background-color: #4ed24e;
+  padding: 2px 8px;
+  color: white;
+}
+
+.pagination button:focus:not(.active) {
+  background-color: #007400;
+  padding: 2px 8px;
+  color: white;
+}
+
+.current-page {
+  background-color: #32CD32;
 }
 
 .col-full-3 {
@@ -50,10 +88,10 @@
   font-size: 16px;
 }
 
-.my-text-price {
+.my-text-price-detail {
   color: red;
-  font-weight: bold;
-  font-size: 14px;
+  font-family: Bahnschrift, serif;
+  font-size: 2em;
 }
 
 .my-card {
@@ -183,4 +221,17 @@ body {
   margin: 1.1em;
   font-weight: bold;
   color: red;
+}
+
+.my-button-detail {
+  color: white;
+  padding: 1em;
+  margin: 1em;
+  border-radius: 0.5em;
+  background-color: #00500f;
+}
+
+.m-detail-button-change {
+  position: absolute;
+  bottom: 0;
 }

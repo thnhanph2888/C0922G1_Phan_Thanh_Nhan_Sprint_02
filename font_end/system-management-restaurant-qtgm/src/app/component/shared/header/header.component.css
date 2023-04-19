@@ -105,6 +105,10 @@ header .logo img {
   color: #48ff48;
 }
 
+.n-item:focus {
+  color: #69ff69;
+}
+
 @media (max-width: 1366px) {
   .navbar .dropdown .dropdown ul {
     left: -90%;

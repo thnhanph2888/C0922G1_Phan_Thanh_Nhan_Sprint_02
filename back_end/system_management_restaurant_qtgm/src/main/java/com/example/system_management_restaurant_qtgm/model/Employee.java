@@ -6,7 +6,6 @@ import java.util.Set;
 
 @Entity
 public class Employee {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
