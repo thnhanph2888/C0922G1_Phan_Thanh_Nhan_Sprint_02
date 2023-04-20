@@ -15,7 +15,7 @@ public class Employee {
     private String email;
     private String phoneNumber;
     private String address;
-    private boolean id_deleted;
+    private boolean is_deleted;
     @ManyToOne
     @JoinColumn(name = "position_id", referencedColumnName = "id")
     private Position position;
@@ -84,12 +84,12 @@ public class Employee {
         this.address = address;
     }
 
-    public boolean isId_deleted() {
-        return id_deleted;
+    public boolean isIs_deleted() {
+        return is_deleted;
     }
 
-    public void setId_deleted(boolean id_deleted) {
-        this.id_deleted = id_deleted;
+    public void setIs_deleted(boolean is_deleted) {
+        this.is_deleted = is_deleted;
     }
 
     public Position getPosition() {
