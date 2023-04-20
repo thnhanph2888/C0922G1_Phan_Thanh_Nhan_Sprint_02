@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CartComponent } from './component/cart/cart.component';
-import { OrderComponent } from './component/order/order.component';
 import { HeaderComponent } from './component/shared/header/header.component';
 import { FooterComponent } from './component/shared/footer/footer.component';
 import { EmployeeListComponent } from './component/employee/employee-list/employee-list.component';
@@ -17,12 +16,17 @@ import { FoodListComponent } from './component/food/food-list/food-list.componen
 import { FoodEditComponent } from './component/food/food-edit/food-edit.component';
 import {FoodCreateComponent} from './component/food/food-create/food-create.component';
 import { HomeComponent } from './component/home/home.component';
+import { OrderCreateComponent } from './component/order/order-create/order-create.component';
+import { OrderListComponent } from './component/order/order-list/order-list.component';
+import { OrderEditComponent } from './component/order/order-edit/order-edit.component';
+import { ChangePasswordComponent } from './component/security-authentication/change-password/change-password.component';
+import { ForgotPasswordComponent } from './component/security-authentication/forgot-password/forgot-password.component';
+import { RegisterComponent } from './component/security-authentication/register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CartComponent,
-    OrderComponent,
     HeaderComponent,
     FooterComponent,
     EmployeeListComponent,
@@ -34,7 +38,13 @@ import { HomeComponent } from './component/home/home.component';
     FoodCreateComponent,
     FoodListComponent,
     FoodEditComponent,
-    HomeComponent
+    HomeComponent,
+    OrderCreateComponent,
+    OrderListComponent,
+    OrderEditComponent,
+    ChangePasswordComponent,
+    ForgotPasswordComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

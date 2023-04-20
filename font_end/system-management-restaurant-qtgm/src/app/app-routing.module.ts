@@ -15,8 +15,21 @@ const routes: Routes = [
     loadChildren: () => import('./component/food/food.module').then(module => module.FoodModule)
   },
   {
-    path: 'login',
-    loadChildren: () => import('./component/login/login/login.module.js').then(module => module.LoginModule)
+    path: 'order',
+    loadChildren: () => import('./component/order/order.module').then(module => module.OrderModule)
+  },
+  {
+    path: 'customer',
+    loadChildren: () => import('./component/customer/customer.module').then(module => module.CustomerModule)
+  },
+  {
+    path: 'employee',
+    loadChildren: () => import('./component/employee/employee.module').then(module => module.EmployeeModule)
+  },
+  {
+    path: 'security',
+    loadChildren: () => import('./component/security-authentication/security-authentication-routing.module')
+      .then(module => module.SecurityAuthenticationRoutingModule)
   },
   {
     path: 'cart',

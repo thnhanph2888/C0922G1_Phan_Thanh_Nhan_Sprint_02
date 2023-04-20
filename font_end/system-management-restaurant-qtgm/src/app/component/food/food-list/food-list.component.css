@@ -193,10 +193,10 @@
 
 .my-side-bar {
   border-radius: 1em;
-  margin: 1em;
+  margin: 0.5em 1em 1em;
   background-image: linear-gradient(90deg, #005500, #003d00);
   position: sticky;
-  top: 12%;
+  top: 10%;
   bottom: 12%;
   right: 2%;
   border: 1px solid #0c4128;
@@ -211,18 +211,17 @@
 }
 
 .my-frame {
-  
   z-index: 1;
   position: sticky;
-  top: 6%;
-  bottom: 12%;
+  top: 9%;
+  bottom: 100%;
   right: 2%;
 }
 
 .my-container-search-bar {
   z-index: 2;
-  margin: 2em;
-  background-color: white;
+  padding: 0.4em 0.8em 0.4em;
+  background-color: #098b00;
   position: absolute;
 }
 
