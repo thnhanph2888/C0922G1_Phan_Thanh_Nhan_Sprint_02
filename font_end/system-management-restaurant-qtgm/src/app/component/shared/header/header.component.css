@@ -140,5 +140,9 @@ header .logo img {
 }
 
  .my-header-color {
-   background-image: linear-gradient(90deg,#003200, #003200, #015301);
+   background-image: linear-gradient(90deg,#003200, #002800, #003200);
+ }
+
+ .badge {
+   background-color: red;
  }

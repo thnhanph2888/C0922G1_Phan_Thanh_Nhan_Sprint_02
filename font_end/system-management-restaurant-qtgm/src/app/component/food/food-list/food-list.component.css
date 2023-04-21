@@ -194,7 +194,8 @@
 .my-side-bar {
   border-radius: 1em;
   margin: 0.5em 1em 1em;
-  background-image: linear-gradient(90deg, #005500, #003d00);
+  /*background-image: linear-gradient(90deg, #005500, #003d00);*/
+  background-color: rgb(8, 62, 0);
   position: sticky;
   top: 10%;
   bottom: 12%;
@@ -221,14 +222,16 @@
 .my-container-search-bar {
   z-index: 2;
   padding: 0.4em 0.8em 0.4em;
-  background-color: #098b00;
+  background-color: #09af09;
   position: absolute;
 }
 
 .my-search-bar {
-  padding: 1em;
-  border-radius: 0.8em;
-  background-image: linear-gradient(90deg, #005500, #003d00);
+  border: 2px solid #003200;
+  padding: 0.5em;
+  border-radius: 2.8em;
+  /*background-color: #0c4128;*/
+  background-color: rgba(255, 255, 255, 0.85);
 }
 
 
