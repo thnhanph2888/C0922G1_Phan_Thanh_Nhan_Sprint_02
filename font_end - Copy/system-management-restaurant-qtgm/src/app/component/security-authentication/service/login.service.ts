@@ -8,7 +8,7 @@ const AUTH_API = 'http://localhost:8080/api/public/';
   providedIn: 'root'
 })
 export class LoginService {
-
+  private baseUrl = '/api/blacklist';
   httpOptions: any;
   isLoggedIn: boolean;
 
@@ -27,6 +27,15 @@ export class LoginService {
       username: obj.username,
       password: obj.password
     }, this.httpOptions);
+  }
+
+  addTokenToBlacklist(sessionId: string, token: string, expireAt: Date): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    const body = {
+      sessionId,
+      expireAt: expireAt.toISOString()
+    };
+    return this.http.post(this.baseUrl + '/addTokenToBlacklist', body, { headers });
   }
 
   forgotPassword(username: string): Observable<any> {

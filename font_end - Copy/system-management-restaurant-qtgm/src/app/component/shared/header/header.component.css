@@ -1,16 +1,3 @@
-body {
-  font-family: "Open Sans", sans-serif;
-  color: #212529;
-}
-
-a {
-  text-decoration: none;
-}
-
-a:hover {
-  color: #ef7f4d;
-  text-decoration: none;
-}
 
 h1,
 h2,
@@ -22,13 +9,6 @@ h6,
   font-family: "Raleway", sans-serif;
 }
 
-
-a {
-  text-decoration: none;
-}
-/*--------------------------------------------------------------
-# Header
---------------------------------------------------------------*/
 header {
   height: 4.2rem;
   transition: all 0.5s;
@@ -97,34 +77,25 @@ header .logo img {
   background-color: rgba(255, 255, 255, 0);
   padding: 0.2em;
   margin: 0.8em;
-  font-weight: bold;
   color: #ffffff;
+  text-decoration: none;
 }
 
 .n-item:hover{
-  color: #48ff48;
+  cursor: pointer;
+  color: #ff4e48;
 }
 
 .n-item:focus {
   color: #69ff69;
 }
 
-@media (max-width: 1366px) {
-  .navbar .dropdown .dropdown ul {
-    left: -90%;
-  }
-
-  .navbar .dropdown .dropdown:hover>ul {
-    left: -100%;
-  }
-}
-
-.dropdownUser {
+.my-dropdown {
   position: relative;
   display: inline-block;
 }
 
-.dropdown-content {
+.my-dropdown-content {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
@@ -135,10 +106,6 @@ header .logo img {
   left: 0;
 }
 
-.dropdownUser:hover .dropdown-content {
-  display: block;
-}
-
  .my-header-color {
-   background-image: linear-gradient(90deg,#003200, #003200, #015301);
+   background-image: linear-gradient(90deg, #4e1e00, #2f1200);
  }

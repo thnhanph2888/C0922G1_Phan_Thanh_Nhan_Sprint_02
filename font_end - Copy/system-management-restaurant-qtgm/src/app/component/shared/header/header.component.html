@@ -1,14 +1,10 @@
 <div>
-  <header class="navbar navbar-expand-lg navbar-light my-header-color shadow fixed-top">
+  <header class="navbar navbar-expand-lg navbar-light my-header-color fixed-top">
     <div class="container-fluid mx-4">
       <div class="logo d-flex flex-row text-center align-items-center">
         <a class="p-0" routerLink="/"><img src="../assets/img/logo.png"
                             class="img-fluid" alt="Trang chủ"></a>
       </div>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-              aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <nav class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ms-auto">
           <li><a routerLink="/cart" class="n-item">
@@ -37,25 +33,9 @@
               </span>
             </a>
           </li>
-          <li><a class="nav-link"><span class="n-item">Lịch sử</span></a></li>
-          <li>
-            <div routerLink="security/login" class="n-item">
-              <i class="bi bi-person-lines-fill mx-2"></i>
-            </div>
-<!--            <div class="dropdownUser">-->
-<!--              <div  class="n-item d-flex align-items-center">-->
-<!--                <i class="bi bi-person-lines-fill mx-2"></i>-->
-<!--                <span style="color: #eb5d1e"><b></b></span></div>-->
-<!--              <div class="dropdown-content p-0">-->
-<!--                <div class=" getstarted" >-->
-<!--                  <button class="btn">Đổi mật khẩu</button>-->
-<!--                </div>-->
-<!--                <div class=" getstarted">-->
-<!--                  <button class="btn">Đăng xuất</button>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-          </li>
+          <li><a class="nav-link" ><span class="n-item" >Lịch sử</span></a></li>
+          <li><a class="nav-link" ><span class="n-item" routerLink="/security/login">Login</span></a></li>
+          <li><a class="nav-link" ><span class="n-item" (click)="logOut()" >Logout</span></a></li>
         </ul>
       </nav>
     </div>

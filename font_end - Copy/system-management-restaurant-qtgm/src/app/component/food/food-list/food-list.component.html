@@ -1,61 +1,85 @@
 <div style="margin-top: 4em">
   <div class="my-row ">
-    <div class="col-mmd-3 my-row justify-content-center">
-        <div class="col-mmd-11 my-side-bar">
-          <div class="my-row">
+    <div class="col-mmd-2 my-row justify-content-center">
+      <div class="col-mmd-11 my-side-bar">
+        <div class="my-row justify-content-center mt-3">
+          <div style="width: fit-content">
+            <button class="my-main-button">Đặt bàn</button>
           </div>
-          <ul class=" list-unstyled my-ul">
-            <li>
-              <button>Cơm</button>
-            </li>
-            <li>
-              <button>Lẩu</button>
-            </li>
-            <li>
-              <button>Đồ chay</button>
-            </li>
-            <li>
-              <button>Tráng miệng</button>
-            </li>
-          </ul>
         </div>
+        <ul class=" list-unstyled my-ul">
+          <li>
+            <button>Cơm</button>
+          </li>
+          <li>
+            <button>Lẩu</button>
+          </li>
+          <li>
+            <button>Đồ chay</button>
+          </li>
+          <li>
+            <button>Tráng miệng</button>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="col-mmd-9 my-row justify-content-center" >
+    <div class="col-mmd-9 my-row justify-content-center">
       <div class="col-mmd-11 mb-2 my-row justify-content-center my-frame">
-          <div class="col-mmd-12 mb-2 my-row justify-content-center my-container-search-bar">
-            <div class="col-mmd-12 my-search-bar">
-              <button class="my-button-green" >Đặt bàn</button>
+        <div class="col-mmd-12 mb-2 my-row justify-content-center my-container-search-bar">
+          <div class="col-mmd-12 my-search-bar">
+            <div class="my-container-item-search">
+              <input class="my-input-search" placeholder="nhập tên món ăn...">
+              <select class="my-input-search">
+                <option>sdfa</option>
+                <option>sdfa</option>
+              </select>
+              <select class="my-input-search">
+                <option></option>
+              </select>
+              <button type="button" class="my-button-green" style="margin-left: 1em">
+                <i style="color: white" class="fa-solid fa-magnifying-glass"></i>
+              </button>
             </div>
           </div>
+        </div>
       </div>
 
       <div class="col-mmd-11 my-row justify-content-center" style="margin-top: 6em">
 
         <div class="col-mmd-3 d-flex p-0 justify-content-center"
-          *ngFor="let food of foodList">
+             *ngFor="let food of foodList">
           <div class="my-card">
-            <img class="my-img"  src="{{food.image}}"
+            <img class="my-img" src="{{food.image}}"
                  alt="hinh anh">
             <div class="my-card-body">
               <div class="my-text-name">{{food.name}}</div>
-              <div class="my-text-price">{{food.price}}</div>
+              <div class="my-text-price">{{food.price| number:'1.0-3'}} VNĐ</div>
+            </div>
+            <div class="my-frame-card">
+              <button class="my-button-card">Thêm vào giỏ hàng</button>
+              <button class="my-button-card">Mua ngay</button>
             </div>
           </div>
         </div>
         <div class="col-mmd-3 d-flex p-0  justify-content-center">
           <div class="my-card">
-            <img class="my-img"  src="https://images.foody.vn/res/g116/1155652/prof/s640x400/foody-upload-api-foody-mobile-im-6522b18f-221112225428.jpeg"
+            <img class="my-img"
+                 src="https://images.foody.vn/res/g116/1155652/prof/s640x400/foody-upload-api-foody-mobile-im-6522b18f-221112225428.jpeg"
                  alt="hinh anh">
             <div class="my-card-body">
               <div class="my-text-name">Hủ Tiếu Chay Gia Lai</div>
               <div class="my-text-price">100.000 VNĐ</div>
             </div>
-
+            <div class="my-frame-card">
+              <button class="my-button-card">Thêm vào giỏ hàng</button>
+              <button class="my-button-card">Mua ngay</button>
+            </div>
           </div>
         </div>
         <div class="col-mmd-3 d-flex p-0 justify-content-center">
           <div class="my-card">
-            <img class="my-img"  src="https://images.foody.vn/res/g107/1061349/s400x400/ec6b0207-8226-4557-92ff-31677b33-d19fdbde-210225143321.jpeg"
+            <img class="my-img"
+                 src="https://images.foody.vn/res/g107/1061349/s400x400/ec6b0207-8226-4557-92ff-31677b33-d19fdbde-210225143321.jpeg"
                  alt="hinh anh">
             <div class="my-card-body">
               <div class="my-text-name">Hủ Tiếu Chay Gia Lai</div>
@@ -66,27 +90,15 @@
         </div>
         <div class="col-mmd-3 d-flex p-0  justify-content-center">
           <div class="my-card">
-            <img class="my-img"  src="https://canthomekongtour.com/static/media/M%C3%93N%20%C4%82N%20NGON%20VN/gi-cun290220.jpg"
+            <img class="my-img"
+                 src="https://canthomekongtour.com/static/media/M%C3%93N%20%C4%82N%20NGON%20VN/gi-cun290220.jpg"
                  alt="hinh anh">
             <div class="my-card-body">
               <div class="my-text-name">Hủ Tiếu Chay Gia Lai</div>
               <div class="my-text-price">100.000 VNĐ</div>
             </div>
-
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="col-mmd-3 d-flex p-0  justify-content-center">-->
-<!--          <div class="my-card">-->
-<!--            <img class="my-img"  src="https://canthomekongtour.com/static/media/M%C3%93N%20%C4%82N%20NGON%20VN/gi-cun290220.jpg"-->
-<!--                 alt="hinh anh">-->
-<!--            <div class="my-card-body">-->
-<!--              <div class="my-text-name">Hủ Tiếu Chay Gia Lai</div>-->
-<!--              <div class="my-text-price">100.000 VNĐ</div>-->
-<!--            </div>-->
-
-<!--          </div>-->
-<!--        </div>-->
-
+          </div>
+        </div>
       </div>
     </div>
   </div>

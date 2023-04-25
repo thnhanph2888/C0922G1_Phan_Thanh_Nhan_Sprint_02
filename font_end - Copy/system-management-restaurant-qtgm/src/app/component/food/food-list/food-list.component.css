@@ -112,25 +112,70 @@
 }
 
 .my-card {
-  border-radius: 1em;
+  position: relative;
+  border-radius: 0.4em;
   margin: 5%;
   width: 90%;
   background-color: #ffffff;
-  border: 1px solid rgba(8, 73, 2, 0.38);
+  border: 2px solid rgba(0, 42, 2, 0.49);
   height: fit-content;
   transition: box-shadow 0.2s ease-in-out;
 }
 
 .my-card:hover {
-  box-shadow:  0 0 10px #0c1800,
-  0 0 10px #001d03;
-  background-color: #f6ffec;
-  border: 1px solid rgba(8, 73, 2, 0.38);
+  border: 2px solid rgba(0, 0, 0, 0.84);
   height: fit-content;
   transition: box-shadow 0.2s ease-in-out;
 }
+
 .my-card-body {
-  padding: 1em;
+  padding: 0.4em;
+}
+
+.my-frame-card {
+  /*transition: width 0.4s ease-in-out;*/
+  background-image: linear-gradient(rgb(49, 49, 49), rgba(255, 255, 255, 0.13));
+  width: 0;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.my-card:hover .my-frame-card {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(255, 255, 255, 0));
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.my-card:hover .my-button-card{
+  border: 1px solid #6aff7b;
+  color: white;
+  border-radius: 1em;
+  background-image: linear-gradient(#00c400, #006d20);
+  font-family: "Source Sans Pro", sans-serif;
+  display: block;
+  height: 15%;
+}
+.my-frame-card:hover .my-button-card:hover{
+  border: 1px solid #6aff7b;
+  color: white;
+  border-radius: 1em;
+  background-image: linear-gradient(#00a700, #002f0e);
+  font-family: "Source Sans Pro", sans-serif;
+  display: block;
+  height: 15%;;
+}
+
+.my-button-card {
+  font-size: 1em;
+  margin-bottom: 0.2em;
+  border: 1px solid #6aff7b;
+  border-radius: 1em;
+  display: none;
+  background-image: linear-gradient(#00a000, #13d500);
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 .my-ul {
@@ -142,61 +187,63 @@
 }
 
 .my-ul li button {
-  border: 2px solid #26a726;
+  border: 2px solid #a75a26;
+  width: 10em;
   font-family: "Source Sans Pro", sans-serif;
   border-radius: 0.2em;
-  padding: 0.4em 1.5em;
+  padding-left:   0.2em;
+  text-align: left;
   margin: 0.5em;
-  color: white;
-  background-image: linear-gradient(#179900, #005754);
+  color: #ffffff;
+  background-image: linear-gradient(#993000, #571900);
   transition: background-color 0.2s ease-in-out;
 }
 
 .my-ul li button:hover  {
-  border: 2px solid #72ff6a;
+  border: 2px solid #a75a26;
+  width: 10em;
   font-family: "Source Sans Pro", sans-serif;
   border-radius: 0.2em;
-  padding: 0.4em 1.5em;
+  padding-left:   0.2em;
+  text-align: left;
   margin: 0.5em;
-  color: white;
-  font-weight: lighter;
-  background-color: #004200;
-  background-image: linear-gradient(#004200, #004200);
+  color: #ffffff;
+  background-image: linear-gradient(#009a01, #00e501);
   transition: background-color 0.2s ease-in-out;
 }
 
 .my-ul li button:focus {
-  border: 2px solid #72ff6a;
+  border: 2px solid #a75a26;
+  width: 10em;
   font-family: "Source Sans Pro", sans-serif;
   border-radius: 0.2em;
-  padding: 0.4em 1.5em;
+  padding-left:   0.2em;
+  text-align: left;
   margin: 0.5em;
-  color: white;
-  font-weight: lighter;
-  background-color: #004200;
-  background-image: linear-gradient(#179900, #1cac02);
+  color: #ffffff;
+  background-image: linear-gradient(#009a01, #00e501);
   transition: background-color 0.2s ease-in-out;
 }
 
 .my-ul li button:hover:focus  {
-  border: 2px solid #72ff6a;
+  border: 2px solid #a75a26;
+  width: 10em;
   font-family: "Source Sans Pro", sans-serif;
   border-radius: 0.2em;
-  padding: 0.4em 1.5em;
+  padding-left:   0.2em;
+  text-align: left;
   margin: 0.5em;
-  color: white;
-  font-weight: lighter;
-  background-color: #004200;
-  background-image: linear-gradient(#15ac00, #1dbf00);
+  color: #ffffff;
+  background-image: linear-gradient(#009a01, #00fd01);
   transition: background-color 0.2s ease-in-out;
 }
 
 .my-side-bar {
-  border-radius: 1em;
+  border-radius: 0.5em;
   margin: 0.5em 1em 1em;
-  background-image: linear-gradient(90deg, #005500, #003d00);
+  background-image: linear-gradient(90deg, #edffed, #f8fff8);
   position: sticky;
-  top: 10%;
+  top: 11%;
   bottom: 12%;
   right: 2%;
   border: 1px solid #0c4128;
@@ -204,8 +251,8 @@
 }
 
 .my-img {
-  border-top-left-radius: 1em;
-  border-top-right-radius: 1em;
+  border-top-left-radius: 0.3em;
+  border-top-right-radius: 0.3em;
   width: 100%;
   height: 180px;
 }
@@ -220,15 +267,27 @@
 
 .my-container-search-bar {
   z-index: 2;
-  padding: 0.4em 0.8em 0.4em;
-  background-color: #098b00;
+  padding: 1em 0.8em 1em;
+  background-color: #CD853F;
   position: absolute;
 }
 
 .my-search-bar {
-  padding: 1em;
-  border-radius: 0.8em;
-  background-image: linear-gradient(90deg, #005500, #003d00);
+  border: 2px solid black;
+  padding: 0.4em;
+  border-radius: 0.2em;
+  background-color: #A0522D;
+}
+
+.my-container-item-search {
+  float: right;
+}
+
+.my-input-search {
+  border-radius: 0.2em;
+  margin-left: 1em;
+   width: 12em;
+   height: 2.1em;
 }
 
 
