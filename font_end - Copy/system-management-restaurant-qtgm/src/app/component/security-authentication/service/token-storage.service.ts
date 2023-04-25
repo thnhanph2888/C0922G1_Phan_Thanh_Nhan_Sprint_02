@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {ShareService} from './share.service';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -8,7 +9,7 @@ const USER_KEY = 'auth-user';
 })
 export class TokenStorageService {
 
-  constructor() {
+  constructor(private shareService: ShareService) {
   }
 
   isLogger() {
@@ -18,6 +19,7 @@ export class TokenStorageService {
   signOut() {
     window.localStorage.clear();
     window.sessionStorage.clear();
+    this.shareService.sendClickEvent();
   }
 
   public saveTokenLocal(token: string) {

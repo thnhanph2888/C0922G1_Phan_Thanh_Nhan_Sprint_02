@@ -96,14 +96,46 @@ header .logo img {
 }
 
 .my-dropdown-content {
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  width: fit-content;
+  background-color: rgb(255, 255, 255);
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  padding: 10px 0 0 0;
+  top: 100%;
+  right: 0;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.85);
   z-index: 1;
-  left: 0;
+  border-radius: 0.2em;
+}
+
+.my-dropdown:hover .my-dropdown-content {
+  display: block;
+}
+
+.my-dropdown .my-dropdown-content a {
+  white-space: nowrap;
+  text-align: left;
+  display: block;
+  padding: 0.4em;
+  color: #000000;
+  text-decoration: none;
+}
+
+.my-dropdown:hover .my-dropdown-content a {
+  text-align: left;
+  display: block;
+  padding: 0.2em 0.6em 0.2em;
+  color: #000000;
+  text-decoration: none;
+}
+.my-dropdown:hover .my-dropdown-content a:hover {
+  text-align: left;
+  display: block;
+  padding: 0.2em 0.6em 0.2em;
+  color: #000000;
+  text-decoration: none;
+  background-color: #d7d7d7;
 }
 
  .my-header-color {

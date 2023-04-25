@@ -27,7 +27,7 @@
   font-size: 1em;
   border: 2px solid black;
   border-radius: 0.2em;
-  background-image: linear-gradient(#ff5500, #ff9e50);
+  background-image: linear-gradient(#ff9e50, #ff5500);
 }
 .my-main-button:hover {
   font-family: "Source Sans Pro", sans-serif;
