@@ -22,26 +22,26 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // if (this.loginService.isLoggedIn) {
-    //   Swal.fire({
-    //     text: 'Bạn đã đăng nhập.',
-    //     icon: 'warning',
-    //     showConfirmButton: false,
-    //     timer: 1500
-    //   });
-    //   this.router.navigateByUrl('/');
-    // }
-    // this.view();
+    if (this.loginService.isLoggedIn) {
+      Swal.fire({
+        text: 'Bạn đã đăng nhập.',
+        icon: 'warning',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      this.router.navigateByUrl('/');
+    }
+    this.view();
     this.loginForm = new FormGroup({
       username: new FormControl(''),
       password: new FormControl('')
     });
-    // if (this.tokenStorageService.getToken()) {
-    //   const user = this.tokenStorageService.getUser();
-    //   this.loginService.isLoggedIn = true;
-    //   this.roles = this.tokenStorageService.getUser().roles;
-    //   this.username = this.tokenStorageService.getUser().username;
-    // }
+    if (this.tokenStorageService.getToken()) {
+      const user = this.tokenStorageService.getUser();
+      this.loginService.isLoggedIn = true;
+      this.roles = this.tokenStorageService.getUser().roles;
+      this.username = this.tokenStorageService.getUser().username;
+    }
   }
 
 
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
           this.tokenStorageService.saveUserLocal(data);
         }
 
-        this.loginService.isLoggedIn = true;
+        this.loginService.setStatusLogin(true);
         this.username = this.tokenStorageService.getUser().username;
         this.roles = this.tokenStorageService.getUser().roles;
         this.loginForm.reset();

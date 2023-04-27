@@ -31,8 +31,14 @@ public class AccountDetails implements UserDetails {
         List<GrantedAuthority> authorities = account.getAccountRoleSet().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
                 .collect(Collectors.toList());
+        String email = "";
+        if (account.getEmployee().getEmail() != null) {
+            email = account.getEmployee().getEmail();
+        } else {
+            email = account.getCustomer().getEmail();
+        }
         return new AccountDetails(
-                account.getEmployee().getEmail(),
+                email,
                 account.getPassword(),
                 authorities);
     }

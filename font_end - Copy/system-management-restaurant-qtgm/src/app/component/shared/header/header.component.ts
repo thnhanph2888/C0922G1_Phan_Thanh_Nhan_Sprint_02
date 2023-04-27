@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   user: string;
   role: string;
   isLoggedIn = false;
-  constructor(private logoutService: LoginService,
+  constructor(private loginService: LoginService,
               private shareService: ShareService,
               private tokenStorageService: TokenStorageService,
               private router: Router) { }
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
     const sessionId = 'session_id';
     const token = 'access_token';
     const expireAt = new Date();
-    this.logoutService.addTokenToBlacklist(sessionId, token, expireAt).subscribe(
+    this.loginService.addTokenToBlacklist(sessionId, token, expireAt).subscribe(
       () => {
         console.log('Token added to blacklist.');
       },
@@ -45,7 +45,6 @@ export class HeaderComponent implements OnInit {
       this.currentUser = this.tokenStorageService.getUser().username;
       this.role = this.tokenStorageService.getUser().roles[0];
       this.username = this.tokenStorageService.getUser().name;
-      debugger
     }
     this.isLoggedIn = this.username != null;
   }
@@ -53,6 +52,9 @@ export class HeaderComponent implements OnInit {
   logOut() {
     this.tokenStorageService.signOut();
     this.username = null;
+    this.role = null;
+    this.loginService.setStatusLogin(false);
+    this.shareService.sendClickEvent();
     this.router.navigateByUrl('');
   }
 }

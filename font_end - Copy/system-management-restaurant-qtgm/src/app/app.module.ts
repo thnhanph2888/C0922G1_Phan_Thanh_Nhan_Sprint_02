@@ -25,6 +25,7 @@ import { RegisterComponent } from './component/security-authentication/register/
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {SecurityAuthenticationModule} from './component/security-authentication/security-authentication.module';
 import {AuthInterceptor} from './component/security-authentication/security-auth/auth.interceptor';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -49,12 +50,13 @@ import {AuthInterceptor} from './component/security-authentication/security-auth
     ForgotPasswordComponent,
     RegisterComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    SecurityAuthenticationModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        SecurityAuthenticationModule,
+        FormsModule
+    ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

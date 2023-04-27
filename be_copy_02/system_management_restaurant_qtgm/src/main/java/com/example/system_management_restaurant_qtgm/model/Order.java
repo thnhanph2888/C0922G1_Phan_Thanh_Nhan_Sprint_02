@@ -17,6 +17,7 @@ public class Order {
     private Timestamp reservationTime;
     private Timestamp actualDelivery;
     private double totalPrice;
+    private boolean isCartItem;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
@@ -33,6 +34,13 @@ public class Order {
     private Set<OrderDetail> orderDetailSet;
 
     public Order() {
+    }
+    public boolean isCartItem() {
+        return isCartItem;
+    }
+
+    public void setCartItem(boolean cartItem) {
+        isCartItem = cartItem;
     }
 
     public int getId() {

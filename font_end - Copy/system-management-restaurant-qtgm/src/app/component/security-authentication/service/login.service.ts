@@ -29,13 +29,17 @@ export class LoginService {
     }, this.httpOptions);
   }
 
+  setStatusLogin(isLogin: boolean) {
+    this.isLoggedIn = isLogin;
+  }
+
   addTokenToBlacklist(sessionId: string, token: string, expireAt: Date): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     const body = {
       sessionId,
       expireAt: expireAt.toISOString()
     };
-    return this.http.post(this.baseUrl + '/addTokenToBlacklist', body, { headers });
+    return this.http.post(this.baseUrl + '/addTokenToBlacklist', body, {headers});
   }
 
   forgotPassword(username: string): Observable<any> {

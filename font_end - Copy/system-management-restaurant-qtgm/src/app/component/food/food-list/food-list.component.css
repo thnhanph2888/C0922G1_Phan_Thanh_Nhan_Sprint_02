@@ -100,13 +100,18 @@
 }
 
 .my-text-name {
-  font-family: Bahnschrift,serif;
+  font-family: Bahnschrift, serif;
   font-weight: bold;
   font-size: 16px;
 }
 
+.my-text-fire {
+  color: #ff0b0b;
+  font-weight: bold;
+  font-size: 14px;
+}
 .my-text-price {
-  color: red;
+  color: #006c0d;
   font-weight: bold;
   font-size: 14px;
 }
@@ -116,7 +121,7 @@
   border-radius: 0.4em;
   margin: 5%;
   width: 90%;
-  background-color: #FFF8DC;
+  background-color: #fff8dc;
   border: 2px solid rgba(0, 42, 2, 0.49);
   height: fit-content;
   transition: box-shadow 0.2s ease-in-out;
@@ -133,39 +138,39 @@
 }
 
 .my-frame-card {
-  /*transition: width 0.4s ease-in-out;*/
-  background-image: linear-gradient(rgb(49, 49, 49), rgba(255, 255, 255, 0.13));
-  width: 0;
-  height: 100%;
+  transition: height 0.1s ease-in-out;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(255, 0, 0, 0));
+  width: 100%;
+  height: 0;
   position: absolute;
   top: 0;
 }
 
 .my-card:hover .my-frame-card {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(255, 255, 255, 0));
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
 }
 
-.my-card:hover .my-button-card{
-  border: 1px solid #6aff7b;
-  color: white;
+.my-card:hover .my-button-card {
+  border: 1px solid #000000;
+  color: #000000;
   border-radius: 1em;
-  background-image: linear-gradient(#00c400, #006d20);
+  background-image: linear-gradient(#ff8703, #fd9355);
   font-family: "Source Sans Pro", sans-serif;
   display: block;
   height: 15%;
 }
-.my-frame-card:hover .my-button-card:hover{
-  border: 1px solid #6aff7b;
-  color: white;
+
+.my-frame-card:hover .my-button-card:hover {
+  border: 1px solid #000000;
+  color: #000000;
   border-radius: 1em;
-  background-image: linear-gradient(#00a700, #002f0e);
+  background-image: linear-gradient(#ff8703, #ffc6a7);
   font-family: "Source Sans Pro", sans-serif;
   display: block;
-  height: 15%;;
+  height: 15%;
 }
 
 .my-button-card {
@@ -183,15 +188,14 @@
   --bs-gutter-y: 0;
   display: flex;
   flex-wrap: wrap;
-  margin: 1em;
 }
 
 .my-ul li button {
   border: 2px solid #a75a26;
-  width: 10em;
+  width: 8em;
   font-family: "Source Sans Pro", sans-serif;
   border-radius: 0.2em;
-  padding-left:   0.2em;
+  padding-left: 0.2em;
   text-align: left;
   margin: 0.5em;
   color: #ffffff;
@@ -201,10 +205,10 @@
 
 .my-ul li button:hover {
   border: 2px solid #a75a26;
-  width: 10em;
+  width: 8em;
   font-family: "Source Sans Pro", sans-serif;
   border-radius: 0.2em;
-  padding-left:   0.2em;
+  padding-left: 0.2em;
   text-align: left;
   margin: 0.5em;
   color: #ffffff;
@@ -214,10 +218,10 @@
 
 .my-ul li button:focus {
   border: 2px solid #a75a26;
-  width: 10em;
+  width: 8em;
   font-family: "Source Sans Pro", sans-serif;
   border-radius: 0.2em;
-  padding-left:   0.2em;
+  padding-left: 0.2em;
   text-align: left;
   margin: 0.5em;
   color: #ffffff;
@@ -225,12 +229,12 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.my-ul li button:hover:focus  {
+.my-ul li button:hover:focus {
   border: 2px solid #a75a26;
-  width: 10em;
+  width: 8em;
   font-family: "Source Sans Pro", sans-serif;
   border-radius: 0.2em;
-  padding-left:   0.2em;
+  padding-left: 0.2em;
   text-align: left;
   margin: 0.5em;
   color: #ffffff;
@@ -243,11 +247,14 @@
   margin: 0.5em 1em 1em;
   background-color: #FFDEAD;
   position: sticky;
-  top: 11%;
-  bottom: 12%;
+  top: 9%;
   right: 2%;
   border: 1px solid #0c4128;
-  height: 86vh;
+  height: fit-content;
+}
+
+.content-side-bar {
+  margin: 1em;
 }
 
 .my-img {
@@ -258,26 +265,52 @@
 }
 
 .my-frame {
-  z-index: 1;
+  z-index: 2;
   position: sticky;
   top: 7%;
-  bottom: 100%;
   right: 2%;
   height: 2vh;
 }
 
+.my-frame-page {
+  z-index: 1;
+  position: sticky;
+  top: 10%;
+  bottom: 100%;
+  right: 2%;
+  height: 2vh;
+  padding: 0 0.8em 0;
+}
+
+.my-container-page {
+  align-items: center;
+  background-color: white;
+  height: 100%;
+}
+
+.my-container-page button {
+  border-radius: 0.2em;
+  margin: 0.1em;
+  font-size: 0.8em;
+  height: fit-content;
+  padding: 0.1em 0.4em 0.1em;
+  font-family: "Source Sans Pro", sans-serif;
+  color: #ffffff;
+  background-image: linear-gradient(#ff5d13, #ff5d13);
+  transition: background-color 0.2s ease-in-out;
+}
+
 .my-container-search-bar {
-  z-index: 2;
-  padding: 1em 0.8em 0;
+  z-index: 1;
+  padding: 1em 0 0;
   background-color: #A0522D;
 }
 
 .my-search-bar {
-  border: 1px solid rgba(248, 248, 248, 0.51);
   padding: 0.4em;
   border-radius: 0.2em;
-  background-color: rgba(0, 0, 0, 0);
-  border-bottom: 2px solid black;
+  background-color: rgba(160, 82, 45, 0.39);
+  box-shadow: 0 10px 9px -6px rgba(0, 0, 0, 0.48);
 }
 
 .my-container-item-search {
@@ -288,35 +321,93 @@
   border: 0;
   border-radius: 0.1em;
   margin-left: 1em;
-   width: 12em;
-   height: 2.1em;
-  background-color: rgba(255, 255, 255, 0.78);
+  width: 12em;
+  height: 2.1em;
+  background-color: #FFDEAD;
 }
+
+.my-input-search:hover {
+  border: 0;
+  border-radius: 0.1em;
+  margin-left: 1em;
+  width: 12em;
+  height: 2.1em;
+  background-color: rgb(255, 255, 255);
+}
+
 .my-input-search:focus {
   outline: none;
   border: 1px solid black;
   border-radius: 0.1em;
   margin-left: 1em;
-   width: 12em;
-   height: 2.1em;
+  width: 12em;
+  height: 2.1em;
   box-shadow: 0 0 0;
   background-color: rgb(255, 255, 255);
 }
 
 .my-icon {
+  margin: 0.2em;
   padding: 0.4em;
-  color: white;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.16);
-  border: 1px solid rgba(0, 0, 0, 0.27);
+  border: 2px solid #a75a26;
+  font-family: "Source Sans Pro", sans-serif;
+  color: #ffffff;
+  background-image: linear-gradient(#7f2700, #4c1600);
+  transition: background-color 0.2s ease-in-out;
 }
+
 .my-icon:hover {
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.15);
-  border: 1px solid #000000;
+  margin: 0.2em;
+  border: 2px solid #a75a26;
+  font-family: "Source Sans Pro", sans-serif;
+  color: #ffffff;
+  background-image: linear-gradient(#7f2700, #4c1600);
+  transition: background-color 0.2s ease-in-out;
 }
 
+/*  order*/
+.container-food-order {
+  overflow-y: auto;
+  height: 8em;
+  width: 100%;
+  box-shadow: 0 2px 5px 5px #802900 inset;
+  padding: 1em
+}
 
+.container-food-order li {
+  padding: 1em;
+  border-bottom: 1px solid black;
+}
 
+.container-food-order li button {
 
+  border: 0;
+  background-color: rgb(255, 255, 255);
+  font-weight: bold;
+}
+
+.container-food-order li button:hover {
+  border: 0;
+  background-color: rgba(255, 255, 255, 0);
+  font-weight: bold;
+  /*font-size: 1.2em;*/
+}
+
+.my-input-search-order {
+  margin: 0.2em;
+  border: 1px solid black;
+  border-radius: 0.1em;
+  width: 12em;
+  height: 2.1em;
+  background-color: #FFDEAD;
+}
+
+.my-input-search-order:hover {
+  margin: 0.2em;
+  border: 2px solid black;
+  border-radius: 0.1em;
+  width: 12em;
+  height: 2.1em;
+  background-color: #FFDEAD;
+}
 

@@ -13,10 +13,12 @@ public interface IFoodRepository extends JpaRepository<Food, Integer> {
             "from `food` as f\n" +
             "join `food_type` as ft on f.food_type_id = ft.id\n" +
             "where ft.id = coalesce(nullif(:idFoodType,0), ft.id)\n" +
-            "and f.price <= coalesce(nullif(:price,0), f.price)\n" +
+            "and f.price >= coalesce(nullif(:priceMin,0), f.price)\n" +
+            "and f.price <= coalesce(nullif(:priceMax,0), f.price)\n" +
             "and f.name like concat('%',:name,'%')")
     Page<Food> searchFood(@Param("idFoodType") int idFoodType,
-                          @Param("price") double price,
+                          @Param("priceMin") double priceMin,
+                          @Param("priceMax") double priceMax,
                           @Param("name") String name,
                           Pageable pageable);
 }

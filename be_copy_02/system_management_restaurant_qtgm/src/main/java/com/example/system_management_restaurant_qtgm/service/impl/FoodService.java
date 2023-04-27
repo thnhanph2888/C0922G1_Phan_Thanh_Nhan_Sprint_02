@@ -15,7 +15,7 @@ public class FoodService implements IFoodService {
     private IFoodRepository foodRepository;
 
     @Override
-    public Page<Food> searchFood(Integer idFoodType, Double price, String name, Pageable pageable) {
-        return foodRepository.searchFood(idFoodType, price, name, pageable);
+    public Page<Food> searchFood(Integer idFoodType, Double priceMin, Double priceMax, String name, Pageable pageable) {
+        return foodRepository.searchFood(idFoodType, priceMin, priceMax, name, pageable);
     }
 }
