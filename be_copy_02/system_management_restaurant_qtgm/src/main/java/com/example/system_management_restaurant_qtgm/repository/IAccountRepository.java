@@ -7,5 +7,5 @@ import org.springframework.data.repository.query.Param;
 
 public interface IAccountRepository extends JpaRepository<Account, Integer> {
      @Query(nativeQuery = true, value = "select acc.* from account as acc where acc.username = :username")
-     Account findAccountByEmployeeEmail(@Param("username") String username);
+     Account findAccountByUsername(@Param("username") String username);
 }

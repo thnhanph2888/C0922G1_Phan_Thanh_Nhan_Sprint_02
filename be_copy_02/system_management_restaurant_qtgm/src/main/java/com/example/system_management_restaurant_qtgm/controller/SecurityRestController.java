@@ -45,8 +45,9 @@ public class SecurityRestController {
         return ResponseEntity.ok(
                 new JwtResponse(
                         jwt,
+                        userDetails.getUserId(),
+                        userDetails.getName(),
                         userDetails.getUsername(),
-                        employeeService.findEmailByUserName(loginRequest.getUsername()).getName(),
                         roles)
         );
     }

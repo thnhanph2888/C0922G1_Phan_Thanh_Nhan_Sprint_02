@@ -42,7 +42,6 @@ export class HeaderComponent implements OnInit {
 
   loadHeader(): void {
     if (this.tokenStorageService.getToken()) {
-      this.currentUser = this.tokenStorageService.getUser().username;
       this.role = this.tokenStorageService.getUser().roles[0];
       this.username = this.tokenStorageService.getUser().name;
     }

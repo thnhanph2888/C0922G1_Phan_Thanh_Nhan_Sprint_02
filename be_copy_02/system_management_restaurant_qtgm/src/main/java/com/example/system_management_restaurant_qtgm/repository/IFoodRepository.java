@@ -11,8 +11,7 @@ public interface IFoodRepository extends JpaRepository<Food, Integer> {
 
     @Query(nativeQuery = true, value = "select f.* \n" +
             "from `food` as f\n" +
-            "join `food_type` as ft on f.food_type_id = ft.id\n" +
-            "where ft.id = coalesce(nullif(:idFoodType,0), ft.id)\n" +
+            "where f.food_type_id = coalesce(nullif(:idFoodType,0), f.food_type_id)\n" +
             "and f.price >= coalesce(nullif(:priceMin,0), f.price)\n" +
             "and f.price <= coalesce(nullif(:priceMax,0), f.price)\n" +
             "and f.name like concat('%',:name,'%')")

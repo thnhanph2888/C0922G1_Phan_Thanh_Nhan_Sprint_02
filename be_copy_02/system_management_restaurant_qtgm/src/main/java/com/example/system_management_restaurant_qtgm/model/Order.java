@@ -12,7 +12,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String delivery_location;
+    private String deliveryLocation;
     private Timestamp orderTime;
     private Timestamp reservationTime;
     private Timestamp actualDelivery;
@@ -51,12 +51,12 @@ public class Order {
         this.id = id;
     }
 
-    public String getDelivery_location() {
-        return delivery_location;
+    public String getDeliveryLocation() {
+        return deliveryLocation;
     }
 
-    public void setDelivery_location(String delivery_location) {
-        this.delivery_location = delivery_location;
+    public void setDeliveryLocation(String deliveryLocation) {
+        this.deliveryLocation = deliveryLocation;
     }
 
     public Timestamp getOrderTime() {

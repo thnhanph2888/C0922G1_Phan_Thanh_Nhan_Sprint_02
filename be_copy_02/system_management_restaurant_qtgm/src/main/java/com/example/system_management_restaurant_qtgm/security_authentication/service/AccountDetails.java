@@ -14,31 +14,40 @@ import java.util.stream.Collectors;
 public class AccountDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;
+    private int userId;
     private String username;
-
+    private String name;
     @JsonIgnore
     private String password;
-    private List<GrantedAuthority> authorities = null;
+    private List<GrantedAuthority> authorities;
 
-    public AccountDetails(String username, String password,
+    public AccountDetails(int userId, String name, String username, String password,
                           List<GrantedAuthority> authorities) {
+        this.userId = userId;
         this.username = username;
+        this.name = name;
         this.password = password;
         this.authorities = authorities;
     }
-// This func help you guys get account information to AccountDetailService
+
+    // This func help you guys get account information to AccountDetailService
     public static AccountDetails build(Account account) {
         List<GrantedAuthority> authorities = account.getAccountRoleSet().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
                 .collect(Collectors.toList());
-        String email = "";
-        if (account.getEmployee().getEmail() != null) {
-            email = account.getEmployee().getEmail();
-        } else {
-            email = account.getCustomer().getEmail();
+        String name = "";
+        int userId = 0;
+        try {
+            name = account.getEmployee().getName();
+            userId = account.getEmployee().getId();
+        } catch (Exception e) {
+            name = account.getCustomer().getName();
+            userId = account.getCustomer().getId();
         }
         return new AccountDetails(
-                email,
+                userId,
+                name,
+                account.getUsername(),
                 account.getPassword(),
                 authorities);
     }
@@ -48,6 +57,33 @@ public class AccountDetails implements UserDetails {
         return authorities;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAuthorities(List<GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 
     @Override
     public String getPassword() {

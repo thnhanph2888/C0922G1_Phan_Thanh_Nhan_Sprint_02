@@ -66,4 +66,13 @@ export class TokenStorageService {
       return null;
     }
   }
+
+  getUserId() {
+    const user = this.getUser();
+    if (user.userId) {
+      return user.userId;
+    } else {
+      return null;
+    }
+  }
 }

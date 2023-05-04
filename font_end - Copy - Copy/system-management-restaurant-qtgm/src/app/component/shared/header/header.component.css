@@ -1,0 +1,143 @@
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-primary {
+  font-family: "Raleway", sans-serif;
+}
+
+header {
+  height: 3.8rem;
+  transition: all 0.5s;
+  z-index: 997;
+  background: #fff;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+
+}
+
+header .logo-name {
+  font-size: 1.5rem;
+  margin: 0;
+  line-height: 2;
+  font-weight: bolder;
+  /*letter-spacing: 1px;*/
+}
+
+@media screen and (max-width: 420px) {
+  header .logo-name {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  header .logo-name {
+    font-size: 13px;
+  }
+}
+
+header .logo .logo-name:hover,
+header .logo img:hover {
+  -ms-transform: scale(1.08); /* IE 9 */
+  -webkit-transform: scale(1.08); /* Safari 3-8 */
+  transform: scale(1.08);
+  text-decoration: none;
+}
+
+header .logo img {
+  padding: 0;
+  margin: 0;
+  max-height: 40px;
+  object-fit: contain;
+}
+
+#main {
+  margin-top: 72px;
+}
+
+.navbar {
+  padding: 0;
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.nabar li {
+  position: relative;
+}
+
+.n-item{
+  background-color: rgba(255, 255, 255, 0);
+  padding: 0.2em;
+  margin: 0.8em;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.n-item:hover{
+  cursor: pointer;
+  color: #ff4e48;
+}
+
+.n-item:focus {
+  color: #69ff69;
+}
+
+.my-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.my-dropdown-content {
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  width: fit-content;
+  background-color: rgb(255, 255, 255);
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.85);
+  z-index: 1;
+  border-radius: 0.2em;
+}
+
+.my-dropdown:hover .my-dropdown-content {
+  display: block;
+}
+
+.my-dropdown .my-dropdown-content a {
+  white-space: nowrap;
+  text-align: left;
+  display: block;
+  padding: 0.4em;
+  color: #000000;
+  text-decoration: none;
+}
+
+.my-dropdown:hover .my-dropdown-content a {
+  text-align: left;
+  display: block;
+  padding: 0.2em 0.6em 0.2em;
+  color: #000000;
+  text-decoration: none;
+}
+.my-dropdown:hover .my-dropdown-content a:hover {
+  text-align: left;
+  display: block;
+  padding: 0.2em 0.6em 0.2em;
+  color: #000000;
+  text-decoration: none;
+  background-color: #d7d7d7;
+}
+
+ .my-header-color {
+   background-image: linear-gradient(90deg, #4e1e00, #2f1200);
+ }

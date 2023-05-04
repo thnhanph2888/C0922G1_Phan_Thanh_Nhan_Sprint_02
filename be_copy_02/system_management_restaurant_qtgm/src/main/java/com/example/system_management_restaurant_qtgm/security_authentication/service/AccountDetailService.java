@@ -19,7 +19,7 @@ public class AccountDetailService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username)  {
-        Account account = iAccountRepository.findAccountByEmployeeEmail(username);
+        Account account = iAccountRepository.findAccountByUsername(username);
         if(account==null){
             throw new UsernameNotFoundException("User " + username + " was not found in the database");
         }

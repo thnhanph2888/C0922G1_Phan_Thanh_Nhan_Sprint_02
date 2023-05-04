@@ -26,9 +26,8 @@ export class FoodService {
     };
     const query = Object.entries(params)
       .filter(([_, value]) => value !== undefined && value !== null)
-      .map(([key, value]) =>`${key}=${value}`)
+      .map(([key, value]) => `${key}=${value}`)
       .join('&');
-    debugger
     return this.httpClient.get<Food[]>(`http://localhost:8080/api/food/search?${query}`);
   }
 

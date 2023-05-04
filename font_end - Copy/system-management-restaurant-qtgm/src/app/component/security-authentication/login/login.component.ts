@@ -12,8 +12,6 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  username: string;
-  roles: string[] = [];
 
   constructor(private loginService: LoginService,
               private router: Router,
@@ -37,10 +35,7 @@ export class LoginComponent implements OnInit {
       password: new FormControl('')
     });
     if (this.tokenStorageService.getToken()) {
-      const user = this.tokenStorageService.getUser();
       this.loginService.isLoggedIn = true;
-      this.roles = this.tokenStorageService.getUser().roles;
-      this.username = this.tokenStorageService.getUser().username;
     }
   }
 
@@ -55,6 +50,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.loginService.login(this.loginForm.value).subscribe(
       data => {
+        debugger
         if (this.loginForm.value.rememberMe) {
           this.tokenStorageService.saveTokenLocal(data.accessToken);
           this.tokenStorageService.saveUserLocal(data);
@@ -64,8 +60,6 @@ export class LoginComponent implements OnInit {
         }
 
         this.loginService.setStatusLogin(true);
-        this.username = this.tokenStorageService.getUser().username;
-        this.roles = this.tokenStorageService.getUser().roles;
         this.loginForm.reset();
         Swal.fire({
           text: 'Đăng nhập thành công',
