@@ -1,6 +1,5 @@
 package com.example.system_management_restaurant_qtgm.controller;
 
-import com.example.system_management_restaurant_qtgm.dto.FoodDTO;
 import com.example.system_management_restaurant_qtgm.model.Food;
 import com.example.system_management_restaurant_qtgm.model.FoodType;
 import com.example.system_management_restaurant_qtgm.service.IFoodService;
@@ -22,7 +21,7 @@ import java.util.List;
 public class FoodRestController {
 
     @Autowired
-    private IFoodService foodService;
+    private IFoodService iFoodService;
     @Autowired
     private IFoodTypeService foodTypeService;
 
@@ -35,7 +34,7 @@ public class FoodRestController {
                                                  @RequestParam(value = "size", defaultValue = "12") Integer size) {
         Sort sort = Sort.by(Sort.Direction.ASC, "price", "rate");
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Food> foodList = foodService.searchFood(idFoodType, priceMin, priceMax, name, pageable);
+        Page<Food> foodList = iFoodService.searchFood(idFoodType, priceMin, priceMax, name, pageable);
         if (foodList == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
@@ -48,12 +47,18 @@ public class FoodRestController {
         List<FoodType> foodTypeList = foodTypeService.findAllFoodType();
         if (foodTypeList != null) {
             return new ResponseEntity<>(foodTypeList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-//    @PostMapping("/employee/create")
-//    public ResponseEntity<?> createFood(@Validated @RequestBody FoodDTO carCustomerDto, BindingResult bindingResult) {
-//
-//    }
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<Food> findFoodById(@PathVariable("id") Integer foodId) {
+        Food food = iFoodService.findById(foodId);
+        if (food != null) {
+            return new ResponseEntity<>(food, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

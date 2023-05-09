@@ -36,4 +36,8 @@ export class FoodService {
   public findAllFoodType(): Observable<FoodType[]> {
     return this.httpClient.get<FoodType[]>(`http://localhost:8080/api/food/foodType`);
   }
+
+  public findFoodById(id: number): Observable<Food> {
+    return this.httpClient.get<Food>(`http://localhost:8080/api/food/findById/${id}`);
+  }
 }

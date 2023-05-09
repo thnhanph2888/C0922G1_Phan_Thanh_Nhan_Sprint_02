@@ -1,7 +1,7 @@
 
 export interface Order {
   id?: number;
-  delivery?: string;
+  deliveryLocation?: string;
   orderTime?: string;
   reservationTime?: string;
   actualDelivery?: string;

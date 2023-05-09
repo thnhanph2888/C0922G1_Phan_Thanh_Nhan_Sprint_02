@@ -14,6 +14,7 @@ public class Food {
     private String name;
     private double price;
     private double rate;
+    private int quantity;
     private String description;
     @JsonIgnore
     @ManyToOne
@@ -24,6 +25,14 @@ public class Food {
     private Set<OrderDetail> orderDetailSet;
 
     public Food() {
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public int getId() {

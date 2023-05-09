@@ -83,7 +83,14 @@ public class OrderRestController {
     @PostMapping("/employee/orderNewList")
     public ResponseEntity<Page<ICartDTO>> getOrderNewList(@RequestParam(value = "page", defaultValue = "0")Integer page,
                                                           @RequestParam(value = "size", defaultValue = "10")Integer size) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "");
-        Page<ICartDTO> orderDTOPage = iOrderService.getListNewOrder();
+//        Sort sort = Sort.by(Sort.Direction.DESC, "");
+//        Pageable pageable = PageRequest.of(page, size, sort);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ICartDTO> orderDTOPage = iOrderService.getListNewOrder(pageable);
+        if (orderDTOPage.hasContent()) {
+            return new ResponseEntity<>(orderDTOPage, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

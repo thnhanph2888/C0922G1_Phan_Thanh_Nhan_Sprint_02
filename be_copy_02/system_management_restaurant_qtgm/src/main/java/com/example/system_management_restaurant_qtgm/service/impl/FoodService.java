@@ -18,4 +18,9 @@ public class FoodService implements IFoodService {
     public Page<Food> searchFood(Integer idFoodType, Double priceMin, Double priceMax, String name, Pageable pageable) {
         return foodRepository.searchFood(idFoodType, priceMin, priceMax, name, pageable);
     }
+
+    @Override
+    public Food findById(Integer foodId) {
+        return foodRepository.findById(foodId).orElse(null);
+    }
 }

@@ -15,9 +15,9 @@ public interface IOrderRepository extends JpaRepository<Order, Integer> {
 
     @Modifying
     @Query(nativeQuery = true, value = "INSERT INTO `orders` \n" +
-            "    (delivery_location, order_time, reservation_time, actual_delivery, customer_id, employee_id, total_price, status, is_employee_order)\n" +
+            "    (delivery_location, order_time, reservation_time, actual_delivery, customer_id, employee_id, total_price, status, is_employee_order, delivery_location)\n" +
             "     VALUES \n" +
-            "    (:address,\n" +
+            "    (:deliveryLocation,\n" +
             "    :orderTime,\n" +
             "    :reservationTime,\n" +
             "    :actualDelivery,\n" +
@@ -26,7 +26,7 @@ public interface IOrderRepository extends JpaRepository<Order, Integer> {
             "    :totalPrice,\n" +
             "    :status," +
             "    :isEmployeeOrder)")
-     void createOrder(@Param("address") String deliveryLocation,
+     void createOrder(@Param("deliveryLocation") String deliveryLocation,
                             @Param("orderTime") String orderTime,
                             @Param("reservationTime") String reservationTime,
                             @Param("actualDelivery") String actualDelivery,

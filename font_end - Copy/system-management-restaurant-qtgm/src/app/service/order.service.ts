@@ -12,7 +12,12 @@ export class OrderService {
   }
 
   addCart(order: Order): Observable<any> {
+    debugger
     return this.httpClient.post<Order>(`http://localhost:8080/api/order/customer/addCart`, order);
+  }
+
+  createNewOrder(order: Order): Observable<any> {
+    return this.httpClient.post<Order>(`http://localhost:0808/api/order`, order);
   }
 
   getListCart(customerId?: number,

@@ -6,4 +6,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface IFoodService {
     Page<Food> searchFood(Integer idFoodType, Double priceMin, Double priceMax, String name, Pageable pageable);
+    Food findById(Integer foodId);
 }
