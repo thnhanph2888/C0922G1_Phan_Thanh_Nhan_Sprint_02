@@ -7,15 +7,13 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from '../service/token-storage.service';
-import {Router} from '@angular/router';
 
 export const InterceptorSkipHeader = 'X-Skip-Interceptor';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private tokenStorageService: TokenStorageService,
-              private router: Router) {}
+  constructor(private tokenStorageService: TokenStorageService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let authRequest = request;
@@ -30,25 +28,5 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     return next.handle(authRequest);
-    //   .pipe(
-    //   catchError((error: HttpErrorResponse) => {
-    //     debugger
-    //     if (error.status === 401 || error.status === 403) {
-    //       Swal.fire({
-    //         text: 'Bạn không được phép truy cập đường dẫn này!',
-    //         icon: 'error',
-    //         confirmButtonText: 'OK'
-    //       })
-    //       this.router.navigateByUrl('error')
-    //     } else {
-    //       Swal.fire({
-    //         text: 'Lỗi kết nối, xin vui lòng thử lại!',
-    //         icon: 'error',
-    //         confirmButtonText: 'OK'
-    //       })
-    //     }
-    //     return throwError(error);
-    //   })
-    // );
   }
 }

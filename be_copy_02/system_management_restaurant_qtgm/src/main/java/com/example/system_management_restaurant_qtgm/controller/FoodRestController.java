@@ -32,7 +32,7 @@ public class FoodRestController {
                                                  @RequestParam(value = "priceMax", defaultValue = "0") Double priceMax,
                                                  @RequestParam(value = "name", defaultValue = "") String name,
                                                  @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                 @RequestParam(value = "size", defaultValue = "100") Integer size) {
+                                                 @RequestParam(value = "size", defaultValue = "12") Integer size) {
         Sort sort = Sort.by(Sort.Direction.ASC, "price", "rate");
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Food> foodList = foodService.searchFood(idFoodType, priceMin, priceMax, name, pageable);

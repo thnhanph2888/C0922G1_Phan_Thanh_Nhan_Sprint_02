@@ -6,6 +6,7 @@ import {Order} from '../../../model/order';
 import {TokenStorageService} from '../../security-authentication/service/token-storage.service';
 import {OrderService} from '../../../service/order.service';
 import Swal from 'sweetalert2';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-food-list',
@@ -28,16 +29,24 @@ export class FoodListComponent implements OnInit {
   foodCartImage: string;
   foodCartRate: number;
   foodCartPrice: number;
-  orderCart: Order;
-  foodCartQuantity: number;
+  foodCartQuantity = 1;
+  size = 12;
+  isLoggedIn = false;
+
   constructor(private foodService: FoodService,
               private tokenStorageService: TokenStorageService,
-              private orderService: OrderService) {
+              private orderService: OrderService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
+    this.checkLogin();
     this.findAllFoodType();
     this.searchFood();
+  }
+
+  checkLogin() {
+    this.isLoggedIn = this.tokenStorageService.getToken() != null;
   }
 
   setValueSearchCategory(foodTypeId: number) {
@@ -64,7 +73,8 @@ export class FoodListComponent implements OnInit {
       this.foodNameSearch,
       this.foodPriceMinSearch,
       this.foodPriceMaxSearch,
-      0).subscribe(foodPages => {
+      0,
+      this.size).subscribe(foodPages => {
       this.foodPages = foodPages;
       this.foodList = this.foodPages.content;
       this.totalPage = this.foodPages.totalPages;
@@ -77,6 +87,7 @@ export class FoodListComponent implements OnInit {
     this.foodNameSearch = null;
     this.foodPriceMinSearch = null;
     this.foodPriceMaxSearch = null;
+    this.size = 12;
     this.searchFood();
   }
 
@@ -101,19 +112,49 @@ export class FoodListComponent implements OnInit {
   }
 
   addToCart() {
-    this.orderCart = {
+    let isEmployeeOrder = false;
+    if (this.tokenStorageService.getRole() === 'ROLE_EMPLOYEE') {
+      isEmployeeOrder = true;
+    }
+    const orderCart: Order = {
       userId: this.tokenStorageService.getUser().userId,
       foodId: this.foodCartId,
       quantity: this.foodCartQuantity,
-      cartItem: 1
+      status: 0,
+      isEmployeeOrder
     };
-    this.orderService.addCart(this.orderCart).subscribe(next => {
+    this.orderService.addCart(orderCart).subscribe(next => {
+      this.foodCartQuantity = 1;
       Swal.fire({
         text: 'Đã thêm vào giỏ hàng',
         icon: 'success',
         showConfirmButton: false,
-        timer: 1500
+        timer: 1400
       });
+    }, error => {
+      Swal.fire({
+        text: 'Vui lòng đăng nhập',
+        icon: 'error',
+        showConfirmButton: true
+      });
+      this.router.navigateByUrl('/login');
     });
+  }
+
+  decrease() {
+    this.foodCartQuantity--;
+  }
+
+  increase() {
+    this.foodCartQuantity++;
+  }
+
+  resetQuantity() {
+    this.foodCartQuantity = 1;
+  }
+
+  loadMore() {
+    this.size += 12;
+    this.searchFood();
   }
 }

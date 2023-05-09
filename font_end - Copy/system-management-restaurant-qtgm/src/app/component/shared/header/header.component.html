@@ -7,7 +7,7 @@
       </div>
       <nav class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ms-auto">
-          <li><a routerLink="/cart" class="n-item">
+          <li [hidden]="!isLoggedIn"><a routerLink="/cart" class="n-item">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                  fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16">
               <path
@@ -28,8 +28,8 @@
                    <span class="visually-hidden">unread messages</span>
               </span>
               <div class="my-dropdown-content">
-                <a routerLink="/security/login">Đơn mới</a>
-                <a [hidden]="role!=='ROLE_EMPLOYEE'" (click)="logOut()">Đơn đã nhận</a>
+                <a >Đơn mới</a>
+                <a [hidden]="role!=='ROLE_EMPLOYEE'">Đơn đã nhận</a>
               </div>
             </a>
           </li>
@@ -48,33 +48,6 @@
         </ul>
       </nav>
     </div>
-  </header><!-- End Header -->
+  </header>
 </div>
 
-
-<script>
-  const dropdownContent = document.querySelector(".dropdown-content");
-  const dropdownButton = document.querySelector(".dropbtn");
-
-  function adjustDropdownPosition() {
-    const screenWidth = window.innerWidth;
-    const dropdownRect = dropdownContent.getBoundingClientRect();
-
-    if (dropdownRect.right > screenWidth) {
-      dropdownContent.style.right = "0";
-      dropdownContent.style.left = "auto";
-    } else if (dropdownRect.left < 0) {
-      dropdownContent.style.left = "0";
-      dropdownContent.style.right = "auto";
-    }
-  }
-
-  dropdownButton.addEventListener("hover", () => {
-    dropdownContent.classList.toggle("show");
-    adjustDropdownPosition();
-  });
-
-  window.addEventListener("resize", () => {
-    adjustDropdownPosition();
-  });
-</script>

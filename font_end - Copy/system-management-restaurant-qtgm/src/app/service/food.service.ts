@@ -16,13 +16,15 @@ export class FoodService {
                       name?: string,
                       priceMin?: number,
                       priceMax?: number,
-                      page?: number): Observable<Food[]> {
+                      page?: number,
+                      size?: number): Observable<Food[]> {
     const params = {
       idFoodType,
       name,
       priceMin,
       priceMax,
-      page
+      page,
+      size
     };
     const query = Object.entries(params)
       .filter(([_, value]) => value !== undefined && value !== null)

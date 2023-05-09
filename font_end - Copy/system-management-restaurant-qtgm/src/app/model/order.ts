@@ -6,7 +6,8 @@ export interface Order {
   reservationTime?: string;
   actualDelivery?: string;
   totalPrice?: number;
-  cartItem?: number;
+  status?: number;
+  isEmployeeOrder?: boolean;
   userId?: number;
   foodId?: number;
   drinksId?: number;

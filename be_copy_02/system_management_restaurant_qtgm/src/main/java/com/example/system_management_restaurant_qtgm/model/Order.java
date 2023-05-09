@@ -17,7 +17,8 @@ public class Order {
     private Timestamp reservationTime;
     private Timestamp actualDelivery;
     private double totalPrice;
-    private boolean isCartItem;
+    private int status;
+    private boolean isEmployeeOrder;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
@@ -35,12 +36,21 @@ public class Order {
 
     public Order() {
     }
-    public boolean isCartItem() {
-        return isCartItem;
+
+    public boolean isEmployeeOrder() {
+        return isEmployeeOrder;
     }
 
-    public void setCartItem(boolean cartItem) {
-        isCartItem = cartItem;
+    public void setEmployeeOrder(boolean employeeOrder) {
+        isEmployeeOrder = employeeOrder;
+    }
+
+    public int isStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getId() {

@@ -9,7 +9,8 @@ public class OrderDTO {
     private Timestamp reservationTime;
     private Timestamp actualDelivery;
     private double totalPrice;
-    private int cartItem;
+    private int status;
+    private boolean isEmployeeOrder;
     private int userId;
     private int foodId;
     private int drinksId;
@@ -58,12 +59,20 @@ public class OrderDTO {
         this.totalPrice = totalPrice;
     }
 
-    public int isCartItem() {
-        return cartItem;
+    public int getStatus() {
+        return status;
     }
 
-    public void setCartItem(int cartItem) {
-        this.cartItem = cartItem;
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public boolean isEmployeeOrder() {
+        return isEmployeeOrder;
+    }
+
+    public void setEmployeeOrder(boolean employeeOrder) {
+        isEmployeeOrder = employeeOrder;
     }
 
     public int getUserId() {

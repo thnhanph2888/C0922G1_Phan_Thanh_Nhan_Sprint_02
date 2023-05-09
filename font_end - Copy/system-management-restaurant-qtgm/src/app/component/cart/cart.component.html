@@ -1,105 +1,102 @@
-<div class="my-row justify-content-center" style="margin-top: 6em; margin-bottom: 1em">
-  <div *ngFor="let order of orderList" class="col-mmd-10 border border-success justify-content-center my-row ">
-    <div class="card mb-3" style="max-width:100%;">
-      <div class="row g-0">
-        <div class="col-md-2">
-          <img src="{{order.image}}" class="img-fluid rounded-start" alt="hinh anh">
+<div class="my-row justify-content-center" style="margin-bottom: 1em">
+
+  <div class="col-mmd-8 justify-content-center" style=" padding: 1em 0 1em">
+
+    <div *ngFor="let order of orderList" class="my-row cart-item" style="background-color: white; margin: 0 1em 0;
+     padding:1em; border: 1px solid #000000">
+       <div class="col-mmd-2">
+         <img src="{{order.image}}" style="width: 100%; height: auto; border-radius: 0.4em">
+       </div>
+       <div class="col-mmd-4  d-flex align-items-center" style="align-items: center">
+         <h5 style="padding-left: 0.5em; ">{{order.name}}</h5>
+       </div>
+       <div class="col-mmd-2 d-flex align-items-center " >
+         <p class="my-price-cart">{{order.price}}</p>
+       </div>
+      <div class="col-mmd-2 d-flex align-items-center ">
+        <div class="my-control-quantity">
+          <button [hidden]="order.quantity > 1" data-bs-toggle="modal" data-bs-target="#removeItemConfirmModal">-</button>
+          <button [hidden]="order.quantity == 1" (click)="decrease(order)">-</button>
+          <span>{{order.quantity}}</span>
+          <button (click)="increase(order)">+</button>
         </div>
-        <div class="col-md-6">
-          <div class="card-body">
-            <h5 class="card-title">{{order.name}}</h5>
-            <p class="card-text">{{order.description}}</p>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="my-price-cart">{{order.price}}</div>
-        </div>
-        <div class="col-md-2">
-          <div class="card-text m-cart-button-change">
-            <button>-</button>
-            <button>{{order.quantity}}</button>
-            <button>+</button>
-          </div>
+      </div>
+      <div class="col-mmd-2 d-flex justify-content-center align-content-center">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="order.isSelected" (change)="getSelectedCartItem()">
+<!--        <input type="checkbox">-->
+      </div>
+    </div>
+
+    <div class="my-row justify-content-center pt-2"><button style="background-color: rgba(247,247,255,0.62)"
+    (click)="loadMore()">Xem thêm <img width="16" height="16" src="../../../assets/img/down-arrow.png" alt="icon"></button></div>
+
+  </div>
+
+  <div class="col-mmd-4 my-row justify-content-center" style="box-shadow: 0 2px 12px 2px rgba(0, 0, 0, 0.58);" >
+    <div class="col-mmd-11 my-side-bar">
+      <div class="content-side-bar">
+        <table style="width: 100%; margin: 0 auto">
+          <tr>
+            <td>Tổng tiền món ăn: </td>
+            <td class="float-end">{{money| number:'1.0-3'}}đ</td>
+          </tr>
+           <tr>
+            <td>Phí ship: </td>
+            <td class="float-end">{{shipFee| number:'1.0-3'}}đ</td>
+          </tr>
+           <tr>
+            <td>Tổng tiền phải thanh toán: </td>
+            <td class="float-end" style="color: red">{{totalMoney| number:'1.0-3'}}đ</td>
+          </tr>
+        </table>
+        <div class="my-row d-flex justify-content-center pt-2">
+          <button [hidden]="totalMoney == 0" type="button" (click)="getIdCartItem()" class="my-button-new" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Thanh toán bằng Paypal</button>
+          <button [hidden]="totalMoney > 0" type="button" class="my-button-new" (click)="displayWarning()">
+            Thanh toán bằng Paypal</button>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-mmd-10 border border-success justify-content-center my-row ">
-    <div class="card mb-3" style="max-width:100%;">
-      <div class="row g-0">
-        <div class="col-md-2">
-          <img src="https://images.foody.vn/res/g116/1155652/prof/s640x400/foody-upload-api-foody-mobile-im-6522b18f-221112225428.jpeg" class="img-fluid rounded-start" alt="hinh anh">
-        </div>
-        <div class="col-md-6">
-          <div class="card-body">
-            <h5 class="card-title">Hủ Tiếu Chay</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 
-          </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Thanh toán</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="col-md-2">
-          <div class="my-price-cart">10000VND</div>
+        <div class="modal-body">
+          <div id="payments"></div>
         </div>
-        <div class="col-md-2">
-          <div class="card-text m-cart-button-change">
-            <button>-</button>
-            <button>2</button>
-            <button>+</button>
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-primary">Hoàn tất</button>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-mmd-10 border border-success justify-content-center my-row ">
-    <div class="card mb-3" style="max-width:100%;">
-      <div class="row g-0">
-        <div class="col-md-2">
-          <img src="https://images.foody.vn/res/g116/1155652/prof/s640x400/foody-upload-api-foody-mobile-im-6522b18f-221112225428.jpeg" class="img-fluid rounded-start" alt="hinh anh">
-        </div>
-        <div class="col-md-6">
-          <div class="card-body">
-            <h5 class="card-title">Hủ Tiếu Chay</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 
-          </div>
+  <!-- Modal -->
+  <div class="modal fade" id="removeItemConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="removeItemConfirmModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="col-md-2">
-          <div class="my-price-cart">10000VND</div>
+        <div class="modal-body">
+          Bạn có muốn xóa món ăn này ra khỏi giỏ hàng không?
         </div>
-        <div class="col-md-2">
-          <div class="card-text m-cart-button-change">
-            <button>-</button>
-            <button>2</button>
-            <button>+</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-mmd-10 border border-success justify-content-center my-row ">
-    <div class="card mb-3" style="max-width:100%;">
-      <div class="row g-0">
-        <div class="col-md-2">
-          <img src="https://images.foody.vn/res/g116/1155652/prof/s640x400/foody-upload-api-foody-mobile-im-6522b18f-221112225428.jpeg" class="img-fluid rounded-start" alt="hinh anh">
-        </div>
-        <div class="col-md-6">
-          <div class="card-body">
-            <h5 class="card-title">Hủ Tiếu Chay</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="my-price-cart">10000VND</div>
-        </div>
-        <div class="col-md-2">
-          <div class="card-text m-cart-button-change">
-            <button>-</button>
-            <button>2</button>
-            <button>+</button>
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+          <button type="button" class="btn btn-primary">Có</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
+

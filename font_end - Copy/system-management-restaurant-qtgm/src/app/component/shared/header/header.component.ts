@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../../security-authentication/service/login.service';
 import {TokenStorageService} from '../../security-authentication/service/token-storage.service';
 import {ShareService} from '../../security-authentication/service/share.service';
@@ -11,14 +11,15 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   username: string;
-  currentUser: string;
   user: string;
   role: string;
   isLoggedIn = false;
+
   constructor(private loginService: LoginService,
               private shareService: ShareService,
               private tokenStorageService: TokenStorageService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.shareService.getClickEvent().subscribe(() => {
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
     });
     this.loadHeader();
   }
+
   addToken() {
     const sessionId = 'session_id';
     const token = 'access_token';

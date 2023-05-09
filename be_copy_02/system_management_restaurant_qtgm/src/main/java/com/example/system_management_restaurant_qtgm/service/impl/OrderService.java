@@ -1,6 +1,6 @@
 package com.example.system_management_restaurant_qtgm.service.impl;
 
-import com.example.system_management_restaurant_qtgm.dto.IOrderDTO;
+import com.example.system_management_restaurant_qtgm.dto.ICartDTO;
 import com.example.system_management_restaurant_qtgm.repository.IOrderRepository;
 import com.example.system_management_restaurant_qtgm.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,27 +15,30 @@ public class OrderService implements IOrderService {
 
     @Autowired
     private IOrderRepository orderRepository;
+
     @Override
     public Boolean createOrder(String deliveryLocation,
-                            String orderTime,
-                            String reservationTime,
-                            String actualDelivery,
-                            Integer customerId,
-                            Integer employeeId,
-                            Double totalPrice,
-                            Integer isCartItem,
-                            Integer quantity,
-                            Integer drinksId,
-                            Integer foodId) {
+                               String orderTime,
+                               String reservationTime,
+                               String actualDelivery,
+                               Integer customerId,
+                               Integer employeeId,
+                               Double totalPrice,
+                               Integer status,
+                               Boolean isEmployeeOrder,
+                               Integer quantity,
+                               Integer drinksId,
+                               Integer foodId) {
         try {
-            orderRepository.createOrder(deliveryLocation,
-                    orderTime,
-                    reservationTime,
-                    actualDelivery,
-                    customerId,
-                    employeeId,
-                    totalPrice,
-                    isCartItem);
+                orderRepository.createOrder(deliveryLocation,
+                        orderTime,
+                        reservationTime,
+                        actualDelivery,
+                        customerId,
+                        employeeId,
+                        totalPrice,
+                        status,
+                        isEmployeeOrder);
             orderRepository.createOrderDetail(quantity,
                     drinksId,
                     foodId,
@@ -47,7 +50,22 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Page<IOrderDTO> getCartItemForCustomerById(Integer customerId, Integer employeeId, Pageable pageable) {
-        return orderRepository.getCartItemForCustomerById(customerId, employeeId, pageable);
+    public Page<ICartDTO> getCartItemByIdUser(Integer customerId, Integer employeeId, Pageable pageable) {
+        return orderRepository.getCartItemByIdUser(customerId, employeeId, pageable);
+    }
+
+    @Override
+    public Boolean setCartItemToOrderItemById(Integer idCartItem) {
+        try {
+            orderRepository.setStatusOrder(idCartItem);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public Page<ICartDTO> getListNewOrder(Pageable pageable) {
+        return orderRepository.getListNewOrder(pageable);
     }
 }

@@ -17,7 +17,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    enum Role {
+        ADMIN("ADMIN"),
+        EMPLOYEE("EMPLOYEE"),
+        CUSTOMER("CUSTOMER");
+        private final String role;
 
+        private Role(String role) {
+            this.role = role;
+        }
+
+        public String getRole() {
+            return role;
+        }
+    }
     @Autowired
     private AccountDetailService accountService;
     @Autowired
@@ -47,10 +60,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/public/**").permitAll()
-                .antMatchers("/api/food/create").hasAnyRole("EMPLOYEE", "ADMIN", "CUSTOMER")
+                .antMatchers("/api/food/create").hasAnyRole(Role.EMPLOYEE.getRole(), Role.ADMIN.getRole())
                 .antMatchers("/api/food/**").permitAll()
-                .antMatchers("/api/order/customer/**").permitAll()
-                .antMatchers("/api/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/order/customer/**").hasAnyRole(Role.CUSTOMER.getRole(), Role.EMPLOYEE.getRole(), Role.ADMIN.getRole())
+                .antMatchers("/api/order/employee/**").hasAnyRole(Role.EMPLOYEE.getRole(), Role.ADMIN.getRole())
+                .antMatchers("/api/order/admin/**").hasRole(Role.ADMIN.getRole())
+                .antMatchers("/api/admin/**").hasRole(Role.ADMIN.getRole())
                 .anyRequest()
                 .authenticated()
                 .and()

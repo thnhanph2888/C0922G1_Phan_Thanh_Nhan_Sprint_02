@@ -1,9 +1,8 @@
 package com.example.system_management_restaurant_qtgm.service;
 
-import com.example.system_management_restaurant_qtgm.dto.IOrderDTO;
+import com.example.system_management_restaurant_qtgm.dto.ICartDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
 public interface IOrderService{
      Boolean createOrder(String deliveryLocation,
@@ -14,10 +13,14 @@ public interface IOrderService{
                       Integer employeeId,
                       Double totalPrice,
                       Integer isCartItem,
+                      Boolean isEmployeeOrder,
                       Integer quantity,
                       Integer drinksId,
                       Integer foodId);
-     Page<IOrderDTO> getCartItemForCustomerById(Integer customerId,
-                                         Integer employeeId,
-                                         Pageable pageable);
+     Page<ICartDTO> getCartItemByIdUser(Integer customerId,
+                                        Integer employeeId,
+                                        Pageable pageable);
+     Boolean setCartItemToOrderItemById(Integer idCartItem);
+
+     Page<ICartDTO> getListNewOrder(Pageable pageable);
 }

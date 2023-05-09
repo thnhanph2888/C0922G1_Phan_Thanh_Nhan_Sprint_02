@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import {HomeComponent} from './component/home/home.component';
 import {CartComponent} from './component/cart/cart.component';
+import {AdminGuard} from './component/security-authentication/security-auth/admin.guard';
+import {EmployeeGuard} from './component/security-authentication/security-auth/employee.guard';
 
 
 const routes: Routes = [
@@ -20,11 +22,13 @@ const routes: Routes = [
   },
   {
     path: 'customer',
-    loadChildren: () => import('./component/customer/customer.module').then(module => module.CustomerModule)
+    loadChildren: () => import('./component/customer/customer.module').then(module => module.CustomerModule),
+    canActivate: [AdminGuard, EmployeeGuard]
   },
   {
     path: 'employee',
-    loadChildren: () => import('./component/employee/employee.module').then(module => module.EmployeeModule)
+    loadChildren: () => import('./component/employee/employee.module').then(module => module.EmployeeModule),
+    canActivate: [AdminGuard]
   },
   {
     path: 'security',

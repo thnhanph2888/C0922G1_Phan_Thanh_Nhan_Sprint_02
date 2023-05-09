@@ -6,7 +6,7 @@ import {TokenStorageService} from '../service/token-storage.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UserGuard implements CanActivate {
+export class EmployeeGuard implements CanActivate {
   constructor(private token: TokenStorageService,
               private router: Router) {
   }
@@ -14,7 +14,7 @@ export class UserGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.token.getToken()) {
-      if ((this.token.getRole() === 'ROLE_ADMIN' || this.token.getRole() === 'ROLE_USER') && this.token.isLogger()) {
+      if (this.token.getRole() === 'ROLE_EMPLOYEE' && this.token.isLogger()) {
         return true;
       } else {
         this.router.navigateByUrl('/error');
@@ -25,4 +25,5 @@ export class UserGuard implements CanActivate {
       return false;
     }
   }
+
 }

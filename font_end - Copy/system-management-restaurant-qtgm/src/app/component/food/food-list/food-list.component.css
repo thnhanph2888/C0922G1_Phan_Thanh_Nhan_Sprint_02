@@ -346,25 +346,6 @@
   background-color: rgb(255, 255, 255);
 }
 
-.my-icon {
-  margin: 0.2em;
-  padding: 0.4em;
-  border: 2px solid #a75a26;
-  font-family: "Source Sans Pro", sans-serif;
-  color: #ffffff;
-  background-image: linear-gradient(#7f2700, #4c1600);
-  transition: background-color 0.2s ease-in-out;
-}
-
-.my-icon:hover {
-  margin: 0.2em;
-  border: 2px solid #a75a26;
-  font-family: "Source Sans Pro", sans-serif;
-  color: #ffffff;
-  background-image: linear-gradient(#7f2700, #4c1600);
-  transition: background-color 0.2s ease-in-out;
-}
-
 /*  order*/
 .container-food-order {
   overflow-y: scroll;

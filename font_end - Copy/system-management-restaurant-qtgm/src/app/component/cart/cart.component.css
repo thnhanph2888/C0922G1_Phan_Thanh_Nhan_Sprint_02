@@ -27,13 +27,6 @@
   padding: 5px;
 }
 
-.my-row {
-  --bs-gutter-x: 0rem;
-  --bs-gutter-y: 0;
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .button-label {
   display: inline-block;
   border-radius: 5px;
@@ -123,18 +116,6 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.my-side-bar {
-  border-radius: 1em;
-  margin: 1em;
-  background-image: linear-gradient(90deg, #005500, #003d00);
-  position: sticky;
-  top: 12%;
-  bottom: 12%;
-  right: 2%;
-  border: 1px solid #0c4128;
-  height: 86vh;
-}
-
 .my-img {
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
@@ -147,10 +128,27 @@
   height: 100%;
 }
 
-body {
+.my-side-bar {
+  border-radius: 0.5em;
+  margin: 1em;
+  background-color: #FFDEAD;
+  position: sticky;
+  top: 0;
+  right: 2%;
+  border: 1px solid #0c4128;
+  height: fit-content;
+}
 
-  background-color: #098b00;
-  /*background-image:linear-gradient(135deg,#008000, #1fa11f, #008000);*/
+.content-side-bar {
+  margin: 1em;
+}
+
+.content-side-bar table tr td {
+  font-weight: bold;
+}
+
+.my-row span:last-child {
+  text-align: right;
 }
 
 .my-cart-item {
@@ -170,17 +168,33 @@ body {
   overflow: hidden;
 }
 
-.m-cart-button-change button {
-  margin: 1em;
-  color: #095700;
-  font-weight: bold;
-  font-size: 1.1em;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 0;
+.my-control-quantity {
+   padding: 0 1em 0;
+   text-align: center;
+   border-radius: 1em;
+   border: 1px solid #0c4128;
+}
+
+.my-control-quantity span {
+  padding: 1em;
+}
+
+.my-control-quantity button {
+  padding: 0.2em 0.6em 0.2em;
+  background-color: white;
+  border: 1px #ffffff;
+}
+
+.my-control-quantity button:hover {
+  padding: 0.2em 0.6em 0.2em;
+  background-color: #e2d8cd;
+  border: 1px #ffffff;
+  color: white;
 }
 
 .my-price-cart {
-  margin: 1.1em;
   font-weight: bold;
   color: red;
 }
+
+/*checkbox*/

@@ -71,11 +71,11 @@
                 <option selected [value]="null">-chọn loại-</option>
                 <option *ngFor="let foodType of foodTypeList" [value]="foodType.id">{{foodType.name}}</option>
               </select>
-              <button (click)="searchFood()" type="button" class="my-icon" style="margin-left: 1em">
+              <button (click)="searchFood()" type="button" class="my-button-new" style="margin-left: 1em">
                 Tìm kiếm
 <!--                <i style="color: white" class="fa-solid fa-magnifying-glass"></i>-->
               </button>
-              <button (click)="reset()" type="button" class="my-icon" style="margin-left: 1em; margin-right: 1em">
+              <button (click)="reset()" type="button" class="my-button-new" style="margin-left: 1em; margin-right: 1em">
                 Làm mới
 <!--                <i class="bi bi-arrow-clockwise"></i>-->
               </button>
@@ -113,15 +113,10 @@
           </div>
         </div>
       </div>
+      <div class="my-row"><button style="background-color: rgba(243,243,248,0.23)" (click)="loadMore()">Xem thêm</button></div>
     </div>
   </div>
 </div>
-
-
-<!-- Button trigger modal-->
-<!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">-->
-<!--  Launch static backdrop modal-->
-<!--</button>-->
 
 <!-- Modal -->
 <div   class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -166,14 +161,14 @@
           </div>
         </div>
         <div>
-          <button>-</button>
+          <button (click)="decrease()">-</button>
           <span>{{foodCartQuantity}}</span>
-          <button>+</button>
+          <button (click)="increase()">+</button>
         </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetQuantity()">Hủy</button>
         <button (click)="addToCart()"
           type="button" class="btn btn-primary" data-bs-dismiss="modal">Thêm</button>
       </div>
