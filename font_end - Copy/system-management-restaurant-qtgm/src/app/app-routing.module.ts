@@ -5,6 +5,7 @@ import {HomeComponent} from './component/home/home.component';
 import {CartComponent} from './component/cart/cart.component';
 import {AdminGuard} from './component/security-authentication/security-auth/admin.guard';
 import {EmployeeGuard} from './component/security-authentication/security-auth/employee.guard';
+import {OrderListComponent} from './component/order/order-list/order-list.component';
 
 
 const routes: Routes = [

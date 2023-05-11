@@ -175,11 +175,26 @@
    border: 1px solid #0c4128;
 }
 
-.my-control-quantity span {
-  padding: 1em;
+.my-control-quantity input {
+  display: inline-block;
+  width: 3em;
+  height: 2em;
+  padding: 0;
+  text-align: center;
+  border: 0;
+}
+
+.my-control-quantity input:hover {
+  display: inline-block;
+  width: 3em;
+  height: 2em;
+  padding: 0;
+  text-align: center;
+  border: 1px solid rgb(68, 16, 0);
 }
 
 .my-control-quantity button {
+  height: 2em;
   padding: 0.2em 0.6em 0.2em;
   background-color: white;
   border: 1px #ffffff;
@@ -187,9 +202,9 @@
 
 .my-control-quantity button:hover {
   padding: 0.2em 0.6em 0.2em;
-  background-color: #e2d8cd;
+  background-color: #e0ffdb;
   border: 1px #ffffff;
-  color: white;
+  color: #ff0000;
 }
 
 .my-price-cart {

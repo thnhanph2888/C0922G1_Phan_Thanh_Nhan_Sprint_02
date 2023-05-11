@@ -8,4 +8,5 @@ export interface Food {
    rate?: number;
    description?: string;
    foodType?: FoodType;
+   quantity?: number;
 }

@@ -15,15 +15,13 @@
        </div>
       <div class="col-mmd-2 d-flex align-items-center ">
         <div class="my-control-quantity">
-          <button [hidden]="order.quantity > 1" data-bs-toggle="modal" data-bs-target="#removeItemConfirmModal">-</button>
-          <button [hidden]="order.quantity == 1" (click)="decrease(order)">-</button>
-          <span>{{order.quantity}}</span>
+          <button (click)="decrease(order)">-</button>
+          <input [(ngModel)]="order.quantity" (change)="setQuantityCartItem(order)">
           <button (click)="increase(order)">+</button>
         </div>
       </div>
       <div class="col-mmd-2 d-flex justify-content-center align-content-center">
-        <input class="form-check-input" type="checkbox" [(ngModel)]="order.isSelected" (change)="getSelectedCartItem()">
-<!--        <input type="checkbox">-->
+        <input class="form-check-input" type="checkbox" [(ngModel)]="order.isSelected" (change)="calculateTotalMoneyItemSelected()">
       </div>
     </div>
 
@@ -71,8 +69,7 @@
           <div id="payments"></div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-          <button type="button" class="btn btn-primary">Hoàn tất</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Quay lại</button>
         </div>
       </div>
     </div>
@@ -83,7 +80,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="removeItemConfirmModalLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="removeItemConfirmModalLabel">Xác nhận xóa khởi giỏ hàng</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">

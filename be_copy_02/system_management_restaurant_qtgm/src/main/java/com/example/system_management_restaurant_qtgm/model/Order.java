@@ -12,7 +12,6 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String deliveryLocation;
     private Timestamp orderTime;
     private Timestamp reservationTime;
     private Timestamp actualDelivery;
@@ -59,14 +58,6 @@ public class Order {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getDeliveryLocation() {
-        return deliveryLocation;
-    }
-
-    public void setDeliveryLocation(String deliveryLocation) {
-        this.deliveryLocation = deliveryLocation;
     }
 
     public Timestamp getOrderTime() {

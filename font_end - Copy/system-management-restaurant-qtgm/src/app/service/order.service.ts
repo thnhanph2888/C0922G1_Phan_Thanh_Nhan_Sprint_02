@@ -12,18 +12,13 @@ export class OrderService {
   }
 
   addCart(order: Order): Observable<any> {
-    debugger
     return this.httpClient.post<Order>(`http://localhost:8080/api/order/customer/addCart`, order);
   }
 
-  createNewOrder(order: Order): Observable<any> {
-    return this.httpClient.post<Order>(`http://localhost:0808/api/order`, order);
-  }
-
-  getListCart(customerId?: number,
-              employeeId?: number,
-              page?: number,
-              size?: number) {
+  getListCartItem(customerId?: number,
+                  employeeId?: boolean,
+                  page?: number,
+                  size?: number) {
     const params = {
       customerId,
       employeeId,
@@ -34,11 +29,51 @@ export class OrderService {
       .filter(([_, value]) => value !== undefined && value !== null)
       .map(([key, value]) => `${key}=${value}`)
       .join('&');
-    return this.httpClient.get<any>(`http://localhost:8080/api/order/customer/cart?${query}`);
+    return this.httpClient.get<any>(`http://localhost:8080/api/order/customer/getCart?${query}`);
   }
 
-  setCartItemToOrderItem(listIdCartItem: number[]): Observable<any> {
+  getOrderListOfUser(customerId?: number,
+                     employeeId?: boolean,
+                     page?: number,
+                     size?: number) {
+    const params = {
+      customerId,
+      employeeId,
+      page,
+      size
+    };
+    const query = Object.entries(params)
+      .filter(([_, value]) => value !== undefined && value !== null)
+      .map(([key, value]) => `${key}=${value}`)
+      .join('&');
     debugger
-    return this.httpClient.post<number[]>(`http://localhost:8080/api/order/customer/setCartToOrder`, listIdCartItem);
+    return this.httpClient.get<any>(`http://localhost:8080/api/order/customer/getOrder?${query}`);
+  }
+
+  setCartToOrder(listIdCartItem: number[], order: Order): Observable<any> {
+    const data = {
+      listIdCartItem,
+      order
+    };
+    return this.httpClient.post<any>(`http://localhost:8080/api/order/customer/createNewOrder`, data);
+  }
+
+  getTotalCart(customerId?: number,
+               isEmployeeOrder?: boolean) {
+    const params = {
+      customerId,
+      isEmployeeOrder
+    };
+    const query = Object.entries(params)
+      .filter(([_, value]) => value !== undefined && value !== null)
+      .map(([key, value]) => `${key}=${value}`)
+      .join('&');
+    return this.httpClient.get<any>(`http://localhost:8080/api/order/customer/totalCart?${query}`);
+  }
+
+  setQuantityCartItem(cartItemId: number, quantity: number): Observable<any> {
+    debugger
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(`http://localhost:8080/api/order/customer/setQuantityCartItem?cartItemId=${cartItemId}&quantity=${quantity}`);
   }
 }

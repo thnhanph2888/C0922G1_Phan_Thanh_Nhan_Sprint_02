@@ -7,5 +7,5 @@ import {HttpClient} from '@angular/common/http';
 export class CustomerService {
 
   constructor(private httpClient: HttpClient) {}
-  public getListFood(): {}
+  // public getListFood(): {}
 }

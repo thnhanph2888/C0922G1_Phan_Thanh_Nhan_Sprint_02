@@ -89,16 +89,16 @@ export class FoodDetailComponent implements OnInit {
   }
 
   addToCart() {
-    let isEmployeeOrder = false;
+    let employeeOrder = false;
     if (this.tokenStorageService.getRole() === 'ROLE_EMPLOYEE') {
-      isEmployeeOrder = true;
+      employeeOrder = true;
     }
     const orderCart: Order = {
       userId: this.tokenStorageService.getUser().userId,
       foodId: this.foodDetail.id,
       quantity: this.quantity,
       status: 0,
-      isEmployeeOrder
+      employeeOrder
     };
     this.orderService.addCart(orderCart).subscribe(next => {
       Swal.fire({

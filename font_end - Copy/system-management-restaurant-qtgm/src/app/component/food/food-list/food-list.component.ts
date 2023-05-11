@@ -7,6 +7,7 @@ import {TokenStorageService} from '../../security-authentication/service/token-s
 import {OrderService} from '../../../service/order.service';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
+import {ShareService} from '../../security-authentication/service/share.service';
 
 @Component({
   selector: 'app-food-list',
@@ -36,7 +37,8 @@ export class FoodListComponent implements OnInit {
   constructor(private foodService: FoodService,
               private tokenStorageService: TokenStorageService,
               private orderService: OrderService,
-              private router: Router) {
+              private router: Router,
+              private shareService: ShareService) {
   }
 
   ngOnInit(): void {
@@ -112,19 +114,20 @@ export class FoodListComponent implements OnInit {
   }
 
   addToCart() {
-    let isEmployeeOrder = false;
+    let employeeOrder = false;
     if (this.tokenStorageService.getRole() === 'ROLE_EMPLOYEE') {
-      isEmployeeOrder = true;
+      employeeOrder = true;
     }
     const orderCart: Order = {
       userId: this.tokenStorageService.getUser().userId,
       foodId: this.foodCartId,
       quantity: this.foodCartQuantity,
       status: 0,
-      isEmployeeOrder
+      employeeOrder
     };
     this.orderService.addCart(orderCart).subscribe(next => {
       this.foodCartQuantity = 1;
+      this.shareService.sendClickEvent();
       Swal.fire({
         text: 'Đã thêm vào giỏ hàng',
         icon: 'success',

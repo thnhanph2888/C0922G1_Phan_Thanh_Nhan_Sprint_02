@@ -18,7 +18,8 @@ public class Customer {
     private String email;
     private String phoneNumber;
     private String address;
-    private boolean is_deleted;
+    private String deliveryLocation;
+    private boolean isDeleted;
     @JsonIgnore
     @OneToOne(mappedBy = "customer")
     private FeedBack feedBack;
@@ -31,6 +32,15 @@ public class Customer {
     private Set<Order> orderSet;
 
     public Customer() {
+    }
+
+
+    public String getDeliveryLocation() {
+        return deliveryLocation;
+    }
+
+    public void setDeliveryLocation(String deliveryLocation) {
+        this.deliveryLocation = deliveryLocation;
     }
 
     public int getId() {
@@ -89,12 +99,12 @@ public class Customer {
         this.address = address;
     }
 
-    public boolean isIs_deleted() {
-        return is_deleted;
+    public boolean isDeleted() {
+        return isDeleted;
     }
 
-    public void setIs_deleted(boolean is_deleted) {
-        this.is_deleted = is_deleted;
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     public FeedBack getFeedBack() {

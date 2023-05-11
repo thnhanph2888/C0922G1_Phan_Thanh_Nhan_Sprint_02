@@ -1,7 +1,9 @@
 package com.example.system_management_restaurant_qtgm.controller;
 
 import com.example.system_management_restaurant_qtgm.dto.ICartDTO;
+import com.example.system_management_restaurant_qtgm.dto.IOrderDTO;
 import com.example.system_management_restaurant_qtgm.dto.OrderDTO;
+import com.example.system_management_restaurant_qtgm.dto.OrderRequest;
 import com.example.system_management_restaurant_qtgm.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,41 +26,48 @@ public class OrderRestController {
     @Autowired
     private IOrderService iOrderService;
 
+    @GetMapping("/customer/setQuantityCartItem")
+    public ResponseEntity<?> setQuantityCartItem(@RequestParam("quantity") Integer quantity,
+                                                 @RequestParam("cartItemId") Integer cartItemId) {
+       if (iOrderService.updateOrderDetailQuantity(quantity, cartItemId)) {
+           return new ResponseEntity<>(HttpStatus.OK);
+       } else {
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
+    }
+
+
     @PostMapping("/customer/addCart")
     public ResponseEntity<?> addToCart(@Validated @RequestBody OrderDTO orderDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        if (iOrderService.createOrder(orderDTO.getDeliveryLocation(),
+        boolean isCreateSuccess = iOrderService.createCartItem(
                 null,
                 null,
                 null,
                 orderDTO.getUserId(),
-                null,
                 orderDTO.getTotalPrice(),
-                orderDTO.getStatus(),
                 orderDTO.isEmployeeOrder(),
                 orderDTO.getQuantity(),
                 null,
-                orderDTO.getFoodId())) {
+                orderDTO.getFoodId());
+        if (isCreateSuccess) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.OK);
         }
-
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/customer/cart")
+    @GetMapping("/customer/getCart")
     public ResponseEntity<Page<ICartDTO>> getListCartByIdUser(@RequestParam(value = "customerId", defaultValue = "0", required = false) Integer customerId,
-                                                              @RequestParam(value = "employeeId", defaultValue = "0", required = false) Integer employeeId,
+                                                              @RequestParam(value = "isEmployeeOrder", defaultValue = "0", required = false) Boolean isEmployeeOrder,
                                                               @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
                                                               @RequestParam(value = "size", defaultValue = "10", required = false) Integer size) {
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
         Pageable pageable = PageRequest.of(page, size, sort);
-        if (customerId == 0 && employeeId == 0) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         try {
-            Page<ICartDTO> orderDTOPage = iOrderService.getCartItemByIdUser(customerId, employeeId, pageable);
+            Page<ICartDTO> orderDTOPage = iOrderService.getCartItemByIdUser(customerId, isEmployeeOrder, pageable);
             if (!orderDTOPage.hasContent()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
@@ -69,26 +77,58 @@ public class OrderRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @Transactional
-    @PostMapping("/customer/setCartToOrder")
-    public ResponseEntity<?> setCartToOrder(@RequestBody List<Integer> listIdCartItem) {
-        for (Integer integer : listIdCartItem) {
-            if (!this.iOrderService.setCartItemToOrderItemById(integer)) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+    @GetMapping("/customer/getOrder")
+    public ResponseEntity<Page<IOrderDTO>> getOrderListByIdUser(@RequestParam(value = "customerId", defaultValue = "0", required = false) Integer customerId,
+                                                              @RequestParam(value = "isEmployeeOrder", defaultValue = "0", required = false) Boolean isEmployeeOrder,
+                                                              @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
+                                                              @RequestParam(value = "size", defaultValue = "10", required = false) Integer size) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        try {
+            Page<IOrderDTO> orderDTOPage = iOrderService.getOrderListByUserId(customerId, isEmployeeOrder, pageable);
+            if (!orderDTOPage.hasContent()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(orderDTOPage, HttpStatus.OK);
             }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/customer/createNewOrder")
+    public ResponseEntity<?> createNewOrder(@RequestBody OrderRequest orderRequest) {
+        List<Integer> listIdCartItem = orderRequest.getListIdCartItem();
+        OrderDTO order = orderRequest.getOrder();
+        boolean isUpdateSuccess = iOrderService.createNewOrderOnline(order, listIdCartItem);
+        if (isUpdateSuccess) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/employee/orderNewList")
-    public ResponseEntity<Page<ICartDTO>> getOrderNewList(@RequestParam(value = "page", defaultValue = "0")Integer page,
-                                                          @RequestParam(value = "size", defaultValue = "10")Integer size) {
+    public ResponseEntity<Page<IOrderDTO>> getOrderNewList(@RequestParam(value = "page", defaultValue = "0")Integer page,
+                                                           @RequestParam(value = "size", defaultValue = "10")Integer size) {
 //        Sort sort = Sort.by(Sort.Direction.DESC, "");
 //        Pageable pageable = PageRequest.of(page, size, sort);
         Pageable pageable = PageRequest.of(page, size);
-        Page<ICartDTO> orderDTOPage = iOrderService.getListNewOrder(pageable);
+        Page<IOrderDTO> orderDTOPage = iOrderService.getListNewOrder(pageable);
         if (orderDTOPage.hasContent()) {
             return new ResponseEntity<>(orderDTOPage, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/customer/totalCart")
+    public ResponseEntity<Integer> getTotalCartItem(@RequestParam(value = "customerId") Integer customerId,
+                                                    @RequestParam(value = "isEmployeeOrder") Boolean isEmployeeOrder) {
+        Integer totalCartItem = iOrderService.getTotalCartItemByUserId(customerId, isEmployeeOrder);
+        if (totalCartItem != null) {
+            return new ResponseEntity<>(totalCartItem, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

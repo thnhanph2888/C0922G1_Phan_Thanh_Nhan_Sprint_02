@@ -11,5 +11,9 @@ public interface IOrderDTO {
     Double getPrice();
     Double getRate();
     Integer getQuantity();
+    Integer getTotalPrice();
+    Integer getOrderDetailId();
     Integer getTable();
+    Integer getSession();
+    Integer getFloor();
 }
