@@ -1,6 +1,8 @@
 package com.example.system_management_restaurant_qtgm.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -19,15 +21,14 @@ public class Employee {
     private String address;
     private String deliveryLocation;
     private boolean isDeleted;
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "position_id", referencedColumnName = "id")
     private Position position;
-    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "employee")
     private Set<Order> orderSet;
 

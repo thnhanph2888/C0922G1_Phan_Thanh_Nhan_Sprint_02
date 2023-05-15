@@ -16,7 +16,7 @@ public interface IFoodRepository extends JpaRepository<Food, Integer> {
             "where f.food_type_id = coalesce(nullif(:idFoodType,0), f.food_type_id)\n" +
             "and f.price >= coalesce(nullif(:priceMin,0), f.price)\n" +
             "and f.price <= coalesce(nullif(:priceMax,0), f.price)\n" +
-            "and f.name like concat('%',:name,'%')")
+            "and f.name like concat('%',:name,'%') and f.quantity > 0")
     Page<Food> searchFood(@Param("idFoodType") int idFoodType,
                           @Param("priceMin") double priceMin,
                           @Param("priceMax") double priceMax,

@@ -1,6 +1,7 @@
 package com.example.system_management_restaurant_qtgm.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -12,7 +13,7 @@ public class Floor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "floor")
     private Set<Section> sectionSet;
 

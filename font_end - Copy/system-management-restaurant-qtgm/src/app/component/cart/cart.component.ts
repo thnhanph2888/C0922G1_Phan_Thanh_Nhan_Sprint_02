@@ -14,13 +14,15 @@ import {Order} from '../../model/order';
 })
 export class CartComponent implements OnInit {
   orderPage: any;
-  orderList: CartItem[];
+  cartItemList: CartItem[];
   money = 0;
   shipFee = 20000;
   totalMoney = 0;
-  size: 10;
-  listIdCartItem: number[] = [];
-
+  size = 10;
+  hasNext: boolean;
+  hasContent: boolean;
+  isCheckSuccess: boolean;
+  deleteId: number;
   constructor(private orderService: OrderService,
               private tokenStorageService: TokenStorageService,
               private shareService: ShareService) {
@@ -32,25 +34,23 @@ export class CartComponent implements OnInit {
 
   calculateTotalMoneyItemSelected() {
     this.totalMoney = 0;
-    const selectedCartItem = this.orderList.filter(order => order.isSelected);
+    const selectedCartItem = this.cartItemList.filter(order => order.isSelected);
     selectedCartItem.forEach(order => {
       this.totalMoney += order.quantity * order.price;
     });
-    if (this.totalMoney > 0) {
-      this.updatePayPalControl();
-    }
   }
 
-  getIdCartItem() {
-    const selectedCartItem = this.orderList.filter(order => order.isSelected);
-    selectedCartItem.forEach(order => {
-      this.listIdCartItem.push(order.orderDetailId);
-    });
+  getIdCartItem(): number[] {
+    return this.cartItemList
+      .filter(order => order.isSelected)
+      .map(order => order.orderDetailId);
   }
 
   increase(order: CartItem) {
-    order.quantity++;
-    this.setQuantityCartItem(order);
+    if (this.checkQuantity(order)) {
+      order.quantity++;
+      this.setQuantityCartItem(order);
+    }
   }
 
   decrease(order: CartItem) {
@@ -58,7 +58,29 @@ export class CartComponent implements OnInit {
     this.setQuantityCartItem(order);
   }
 
-  setQuantityCartItem(order: any) {
+  getQuantityInput(order: CartItem) {
+    if (this.checkQuantity(order)) {
+      this.setQuantityCartItem(order);
+    } else {
+      order.quantity = order.quantityFood;
+      this.setQuantityCartItem(order);
+    }
+  }
+
+  checkQuantity(order: CartItem): boolean {
+    if (order.quantity >= order.quantityFood) {
+      Swal.fire({
+        text: 'Xin lỗi nhà hàng chúng tôi không còn đủ số lượng, quý khách vui lòng xem món ăn khác hoặc sau lại sau',
+        icon: 'error',
+        showConfirmButton: true
+      });
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  setQuantityCartItem(order: CartItem) {
     this.orderService.setQuantityCartItem(order.orderDetailId, order.quantity).subscribe(next => {
       this.calculateTotalMoneyItemSelected();
     });
@@ -67,57 +89,79 @@ export class CartComponent implements OnInit {
   getListCartItem() {
     if (this.tokenStorageService.getRole() === 'ROLE_EMPLOYEE') {
       this.orderService.getListCartItem(this.tokenStorageService.getUserId(), true, null, this.size).subscribe(orderPage => {
-        this.orderPage = orderPage;
-        if (this.orderPage == null) {
-          this.orderList = null;
-        } else {
-          this.orderList = orderPage.content;
-        }
+        this.setNewPageCartItem(orderPage);
       });
     } else {
       this.orderService.getListCartItem(this.tokenStorageService.getUserId(), false, null, this.size).subscribe(orderPage => {
-        this.orderPage = orderPage;
-        if (this.orderPage == null) {
-          this.orderList = null;
-        } else {
-          this.orderList = orderPage.content;
-        }
+        this.setNewPageCartItem(orderPage);
       });
+    }
+  }
+
+  setNewPageCartItem(page: any) {
+    this.orderPage = page;
+    if (this.orderPage == null) {
+      this.cartItemList = null;
+      this.hasNext = false;
+      this.hasContent = false;
+    } else {
+      this.hasNext = this.orderPage.number + 1 < this.orderPage.totalPages;
+      this.cartItemList = page.content;
+      this.hasContent = true;
     }
   }
 
   updatePayPalControl() {
-    document.querySelector('#payments').innerHTML = '';
-    render({
-      id: '#payments',
-      currency: 'VND',
-      value: this.totalMoney + '',
-      onApprove: (details) => {
-        this.createNewOrder();
-      }
+    const listCartItemId = this.getIdCartItem();
+    this.orderService.checkQuantityFood(listCartItemId).subscribe(next => {
+      this.isCheckSuccess = true;
+      document.querySelector('#payments').innerHTML = '';
+      render({
+        id: '#payments',
+        currency: 'VND',
+        value: String((this.totalMoney / 22000).toFixed(2)),
+        onApprove: (details) => {
+          this.createNewOrder();
+        }
+      });
+    }, error => {
+      this.isCheckSuccess = false;
     });
   }
 
   createNewOrder() {
+    const listCartItemId = this.getIdCartItem();
+    const orderNew = this.getObject();
+    this.orderService.setCartToOrder(listCartItemId, orderNew).subscribe(statusResult => {
+      if (statusResult === 0) {
+        this.shareService.sendClickEvent();
+        Swal.fire({
+          text: 'Thanh toán thành công',
+          icon: 'success',
+          showConfirmButton: true
+        });
+        this.getListCartItem();
+      } else {
+        Swal.fire({
+          text: 'Món ăn quý khách chọn không còn đủ số lượng, vui lòng chọn lại số lượng!',
+          icon: 'success',
+          showConfirmButton: true
+        });
+      }
+    });
+  }
+
+  getObject(): Order {
     let employeeOrder = false;
     if (this.tokenStorageService.getRole() === 'ROLE_EMPLOYEE') {
       employeeOrder = true;
     }
-    const order: Order = {
+    return {
       userId: this.tokenStorageService.getUser().userId,
       totalPrice: this.totalMoney,
       status: 1,
       employeeOrder
     };
-    this.orderService.setCartToOrder(this.listIdCartItem, order).subscribe(next => {
-      this.shareService.sendClickEvent();
-      Swal.fire({
-        text: 'Thanh toán thành công',
-        icon: 'success',
-        showConfirmButton: true
-      });
-      this.getListCartItem();
-    });
   }
 
   loadMore() {
@@ -130,6 +174,27 @@ export class CartComponent implements OnInit {
       text: 'Vui lòng chọn món ăn muốn mua để thanh toán',
       icon: 'error',
       showConfirmButton: true
+    });
+  }
+
+  setIdDelete(id: number) {
+     this.deleteId = id;
+  }
+
+  delete() {
+    this.orderService.deleteOrderDetailById(this.deleteId).subscribe(next => {
+      Swal.fire({
+        text: 'Đã xóa khỏi giỏ hàng',
+        icon: 'success',
+        showConfirmButton: true
+      });
+      this.getListCartItem();
+    }, error => {
+      Swal.fire({
+        text: 'Lỗi',
+        icon: 'error',
+        showConfirmButton: true
+      });
     });
   }
 }

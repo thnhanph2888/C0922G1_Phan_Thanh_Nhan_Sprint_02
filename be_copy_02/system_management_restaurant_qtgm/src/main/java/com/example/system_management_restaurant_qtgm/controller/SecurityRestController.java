@@ -22,19 +22,15 @@ import java.util.stream.Collectors;
 @RequestMapping("api/public")
 @CrossOrigin
 public class SecurityRestController {
-
     @Autowired
     private JwtUtility jwtUtility;
     @Autowired
     private AuthenticationManager authenticationManager;
-    @Autowired
-    private IEmployeeService employeeService;
 
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtility.generateJwtToken(loginRequest.getUsername());

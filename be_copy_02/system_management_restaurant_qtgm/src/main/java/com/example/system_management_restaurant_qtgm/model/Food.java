@@ -1,6 +1,8 @@
 package com.example.system_management_restaurant_qtgm.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -16,11 +18,11 @@ public class Food {
     private double rate;
     private int quantity;
     private String description;
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "food_type_id", referencedColumnName = "id")
     private FoodType foodType;
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "food")
     private Set<OrderDetail> orderDetailSet;
 

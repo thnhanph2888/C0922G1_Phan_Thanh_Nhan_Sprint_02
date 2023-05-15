@@ -31,9 +31,11 @@ export class FoodListComponent implements OnInit {
   foodCartRate: number;
   foodCartPrice: number;
   foodCartQuantity = 1;
+  foodQuantity: number;
   size = 12;
   isLoggedIn = false;
-
+  hasNext: boolean;
+  isAddCartSuccess: boolean;
   constructor(private foodService: FoodService,
               private tokenStorageService: TokenStorageService,
               private orderService: OrderService,
@@ -77,11 +79,17 @@ export class FoodListComponent implements OnInit {
       this.foodPriceMaxSearch,
       0,
       this.size).subscribe(foodPages => {
-      this.foodPages = foodPages;
-      this.foodList = this.foodPages.content;
-      this.totalPage = this.foodPages.totalPages;
-      this.currentPage = this.foodPages.number;
+      this.setNewPageFood(foodPages);
     });
+  }
+
+  setNewPageFood(foodPage: any) {
+    this.foodPages = foodPage;
+    this.hasNext = this.foodPages.number + 1 < this.foodPages.totalPages;
+    this.foodList = this.foodPages.content;
+    debugger
+    this.totalPage = this.foodPages.totalPages;
+    this.currentPage = this.foodPages.number;
   }
 
   reset() {
@@ -101,63 +109,110 @@ export class FoodListComponent implements OnInit {
     this.isOrder = false;
   }
 
-  setInfoModalAddToCart(foodCartId: number,
-                        foodCartName: string,
-                        foodCartImage: string,
-                        foodCartRate: number,
-                        foodCartPrice: number) {
-    this.foodCartImage = foodCartImage;
-    this.foodCartId = foodCartId;
-    this.foodCartName = foodCartName;
-    this.foodCartRate = foodCartRate;
-    this.foodCartPrice = foodCartPrice;
+  setInfoModalAddToCart(food: Food) {
+    this.foodCartImage = food.image;
+    this.foodCartId = food.id;
+    this.foodCartName = food.name;
+    this.foodCartRate = food.rate;
+    this.foodCartPrice = food.price;
   }
 
   addToCart() {
+    const orderCart = this.getObjectOrder();
+    this.orderService.addCart(orderCart).subscribe(status => {
+      if (status === -1) {
+        this.foodCartQuantity = 1;
+        this.shareService.sendClickEvent();
+        Swal.fire({
+          text: 'Đã thêm vào giỏ hàng!',
+          icon: 'success',
+          showConfirmButton: true,
+          timer: 1400
+        });
+        this.isAddCartSuccess = true;
+      } else if (status > 0) {
+        this.foodCartQuantity = status;
+        Swal.fire({
+          text: 'Xin lỗi hiện tại chúng tôi không có đủ số lượng yêu cầu, số lượng có thể thêm ' + status + ' !',
+          icon: 'error',
+          showConfirmButton: true
+        });
+        this.isAddCartSuccess = false;
+      } else {
+        Swal.fire({
+          text: 'xin lỗi quý khách món này tạm hết hôm nay vui lòng chọn món khác!',
+          icon: 'error',
+          showConfirmButton: true
+        });
+      }
+    }, error => {
+      if (this.tokenStorageService.getToken()) {
+        Swal.fire({
+          text: 'Thêm thất bại, vui lòng thử lại sau!',
+          icon: 'error',
+          showConfirmButton: true
+        });
+        this.isAddCartSuccess = false;
+      } else {
+        Swal.fire({
+          text: 'Vui lòng đăng nhập!',
+          icon: 'error',
+          showConfirmButton: true
+        });
+        this.router.navigateByUrl('/login');
+      }
+    });
+  }
+
+  getObjectOrder(): Order {
     let employeeOrder = false;
     if (this.tokenStorageService.getRole() === 'ROLE_EMPLOYEE') {
       employeeOrder = true;
     }
-    const orderCart: Order = {
+    return {
       userId: this.tokenStorageService.getUser().userId,
       foodId: this.foodCartId,
       quantity: this.foodCartQuantity,
       status: 0,
       employeeOrder
     };
-    this.orderService.addCart(orderCart).subscribe(next => {
-      this.foodCartQuantity = 1;
-      this.shareService.sendClickEvent();
-      Swal.fire({
-        text: 'Đã thêm vào giỏ hàng',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1400
-      });
-    }, error => {
-      Swal.fire({
-        text: 'Vui lòng đăng nhập',
-        icon: 'error',
-        showConfirmButton: true
-      });
-      this.router.navigateByUrl('/login');
-    });
   }
 
   decrease() {
-    this.foodCartQuantity--;
+    if (this.foodCartQuantity <= 1) {
+      Swal.fire({
+        text: 'Vui lòng chọn số lượng lớn hơn 1!',
+        icon: 'error',
+        showConfirmButton: true
+      });
+    } else {
+      this.foodCartQuantity--;
+    }
   }
 
   increase() {
+    if (this.foodCartQuantity >= this.foodQuantity) {
+      Swal.fire({
+        text: 'Xin lỗi nhà hàng chúng tôi không còn đủ số lượng, vui lòng xem món khác!',
+        icon: 'error',
+        showConfirmButton: true
+      });
+      this.foodCartQuantity = this.foodQuantity;
+    }
     this.foodCartQuantity++;
   }
 
   resetQuantity() {
     this.foodCartQuantity = 1;
+    this.hiddenClose();
   }
 
   loadMore() {
     this.size += 12;
     this.searchFood();
+  }
+
+  hiddenClose() {
+    this.isAddCartSuccess = false;
   }
 }

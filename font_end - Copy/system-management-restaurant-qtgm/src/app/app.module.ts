@@ -26,6 +26,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {SecurityAuthenticationModule} from './component/security-authentication/security-authentication.module';
 import {AuthInterceptor} from './component/security-authentication/security-auth/auth.interceptor';
 import {FormsModule} from '@angular/forms';
+import { PersonalInformationComponent } from './component/personal-information/personal-information.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {FormsModule} from '@angular/forms';
     OrderEditComponent,
     ChangePasswordComponent,
     ForgotPasswordComponent,
-    RegisterComponent
+    RegisterComponent,
+    PersonalInformationComponent
   ],
     imports: [
         BrowserModule,

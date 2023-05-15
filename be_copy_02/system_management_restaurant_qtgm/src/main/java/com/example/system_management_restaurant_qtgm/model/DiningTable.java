@@ -1,5 +1,6 @@
 package com.example.system_management_restaurant_qtgm.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -11,12 +12,12 @@ public class DiningTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "section_id", referencedColumnName = "id")
     private Section section;
-    @JsonIgnore
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 

@@ -1,6 +1,7 @@
 package com.example.system_management_restaurant_qtgm.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -14,7 +15,7 @@ public class Drinks {
     private String name;
     private String image;
     private double price;
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "drinks")
     private Set<OrderDetail> orderDetailSet;
 

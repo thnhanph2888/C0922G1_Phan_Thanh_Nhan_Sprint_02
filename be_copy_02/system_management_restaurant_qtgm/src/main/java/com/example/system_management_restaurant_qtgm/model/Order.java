@@ -1,6 +1,8 @@
 package com.example.system_management_restaurant_qtgm.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -18,22 +20,26 @@ public class Order {
     private double totalPrice;
     private int status;
     private boolean isEmployeeOrder;
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "order")
     private Set<DiningTable> diningTableSet;
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "order")
     private Set<OrderDetail> orderDetailSet;
 
     public Order() {
+    }
+
+    public int getStatus() {
+        return status;
     }
 
     public boolean isEmployeeOrder() {

@@ -21,14 +21,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         ADMIN("ADMIN"),
         EMPLOYEE("EMPLOYEE"),
         CUSTOMER("CUSTOMER");
-        private final String role;
+        private final String value;
 
         private Role(String role) {
-            this.role = role;
+            this.value = role;
         }
 
         public String getRole() {
-            return role;
+            return value;
         }
     }
     @Autowired
@@ -60,7 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/public/**").permitAll()
-                .antMatchers("/api/food/create").hasAnyRole(Role.EMPLOYEE.getRole(), Role.ADMIN.getRole())
+                .antMatchers("/api/food/customer/**").hasAnyRole(Role.CUSTOMER.getRole(), Role.EMPLOYEE.getRole(), Role.ADMIN.getRole())
+                .antMatchers("/api/food/employee/**").hasAnyRole(Role.EMPLOYEE.getRole(), Role.ADMIN.getRole())
                 .antMatchers("/api/food/**").permitAll()
                 .antMatchers("/api/order/customer/**").hasAnyRole(Role.CUSTOMER.getRole(), Role.EMPLOYEE.getRole(), Role.ADMIN.getRole())
                 .antMatchers("/api/order/employee/**").hasAnyRole(Role.EMPLOYEE.getRole(), Role.ADMIN.getRole())

@@ -2,31 +2,43 @@
 
   <div class="col-mmd-8 justify-content-center" style=" padding: 1em 0 1em">
 
-    <div *ngFor="let order of orderList" class="my-row cart-item" style="background-color: white; margin: 0 1em 0;
+    <div *ngFor="let cartItem of cartItemList" class="my-row cart-item" style="background-color: white; margin: 0 1em 0;
      padding:1em; border: 1px solid #000000">
        <div class="col-mmd-2">
-         <img src="{{order.image}}" style="width: 100%; height: auto; border-radius: 0.4em">
+         <img src="{{cartItem.image}}" style="width: 100%; height: 10em; border-radius: 0.4em">
        </div>
        <div class="col-mmd-4  d-flex align-items-center" style="align-items: center">
-         <h5 style="padding-left: 0.5em; ">{{order.name}}</h5>
+         <div>
+           <h5 style="padding-left: 0.5em; ">{{cartItem.name}}</h5>
+           <h5 style="padding-left: 0.5em; color:red;"><i class="bi bi-fire"></i>{{cartItem.rate}}</h5>
+         </div>
+
        </div>
        <div class="col-mmd-2 d-flex align-items-center " >
-         <p class="my-price-cart">{{order.price}}</p>
+         <p class="my-price-cart">{{cartItem.price}}</p>
        </div>
       <div class="col-mmd-2 d-flex align-items-center ">
         <div class="my-control-quantity">
-          <button (click)="decrease(order)">-</button>
-          <input [(ngModel)]="order.quantity" (change)="setQuantityCartItem(order)">
-          <button (click)="increase(order)">+</button>
+          <button [hidden]="cartItem.quantity <= 1" (click)="decrease(cartItem)">-</button>
+          <button [hidden]="cartItem.quantity > 1" (click)="setIdDelete(cartItem.orderDetailId)" data-bs-toggle="modal" data-bs-target="#removeItemConfirmModal" >-</button>
+          <input [(ngModel)]="cartItem.quantity" (change)="getQuantityInput(cartItem)">
+          <button (click)="increase(cartItem)">+</button>
         </div>
       </div>
       <div class="col-mmd-2 d-flex justify-content-center align-content-center">
-        <input class="form-check-input" type="checkbox" [(ngModel)]="order.isSelected" (change)="calculateTotalMoneyItemSelected()">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="cartItem.isSelected" (change)="calculateTotalMoneyItemSelected()">
       </div>
     </div>
 
-    <div class="my-row justify-content-center pt-2"><button style="background-color: rgba(247,247,255,0.62)"
-    (click)="loadMore()">Xem thêm <img width="16" height="16" src="../../../assets/img/down-arrow.png" alt="icon"></button></div>
+    <div [hidden]="!hasNext" class="my-row justify-content-center pt-2">
+      <button class="my-button-load-more" (click)="loadMore()">
+        Xem thêm
+        <img width="16" height="16" src="../../../assets/img/down-arrow.png" alt="icon">
+      </button>
+    </div>
+    <div [hidden]="cartItemList != null" class="my-row justify-content-center pt-2" style="background-color: rgba(255,255,255,0.24)">
+      <h5>Giỏ hàng trống!</h5>
+    </div>
 
   </div>
 
@@ -48,7 +60,7 @@
           </tr>
         </table>
         <div class="my-row d-flex justify-content-center pt-2">
-          <button [hidden]="totalMoney == 0" type="button" (click)="getIdCartItem()" class="my-button-new" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <button [hidden]="totalMoney == 0" type="button" (click)="updatePayPalControl()" class="my-button-new" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Thanh toán bằng Paypal</button>
           <button [hidden]="totalMoney > 0" type="button" class="my-button-new" (click)="displayWarning()">
             Thanh toán bằng Paypal</button>
@@ -66,7 +78,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div id="payments"></div>
+          <div [hidden]="!isCheckSuccess" id="payments"></div>
+          <div [hidden]="isCheckSuccess">Món ăn quý khách chọn không còn đủ số lượng, vui lòng chọn lại số lượng!</div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Quay lại</button>
@@ -87,8 +100,8 @@
           Bạn có muốn xóa món ăn này ra khỏi giỏ hàng không?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
-          <button type="button" class="btn btn-primary">Có</button>
+          <button type="button" class="my-button-back" data-bs-dismiss="modal">Không</button>
+          <button type="button" class="my-button-new" data-bs-dismiss="modal" (click)="delete()" >Có</button>
         </div>
       </div>
     </div>

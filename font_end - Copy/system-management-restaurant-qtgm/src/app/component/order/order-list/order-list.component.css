@@ -1,0 +1,48 @@
+.my-control-quantity {
+  padding: 0 1em 0;
+  text-align: center;
+  border-radius: 1em;
+  border: 1px solid #41180c;
+}
+
+.my-control-quantity input {
+  display: inline-block;
+  width: 3em;
+  height: 2em;
+  padding: 0;
+  text-align: center;
+  border: 0;
+}
+
+.my-control-quantity input:hover {
+  display: inline-block;
+  width: 3em;
+  height: 2em;
+  padding: 0;
+  text-align: center;
+  border: 0;
+}
+
+.my-control-quantity input:focus {
+  box-shadow: 0 0;
+  display: inline-block;
+  width: 3em;
+  height: 2em;
+  padding: 0;
+  text-align: center;
+  border: 0;;
+}
+
+.my-control-quantity button {
+  height: 2em;
+  padding: 0.2em 0.6em 0.2em;
+  background-color: #ffffff;
+  border: 1px #ffffff;
+}
+
+.my-control-quantity button:hover {
+  font-weight: bold;
+  padding: 0.2em 0.6em 0.2em;
+  background-color: #fff2db;
+  border: 1px #ffffff;
+}

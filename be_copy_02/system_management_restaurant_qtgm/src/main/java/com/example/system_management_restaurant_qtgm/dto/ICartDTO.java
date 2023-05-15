@@ -1,7 +1,7 @@
 package com.example.system_management_restaurant_qtgm.dto;
 
 public interface ICartDTO {
-    String getId();
+    String getOrderId();
     String getName();
     String getOrderDetailId();
     String getDescription();

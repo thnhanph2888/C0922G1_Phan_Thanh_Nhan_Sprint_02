@@ -1,3 +1,4 @@
+import {OrderDetail} from './order-detail';
 
 export interface Order {
   id?: number;
@@ -20,4 +21,5 @@ export interface Order {
   table?: number;
   session?: number;
   floor?: number;
+  orderDetailSet?: OrderDetail[];
 }

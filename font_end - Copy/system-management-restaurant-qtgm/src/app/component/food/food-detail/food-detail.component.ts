@@ -22,7 +22,7 @@ export class FoodDetailComponent implements OnInit {
               private foodService: FoodService,
               private orderService: OrderService,
               private tokenStorageService: TokenStorageService,
-              private router : Router) {
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -45,36 +45,6 @@ export class FoodDetailComponent implements OnInit {
       }
     });
   }
-
-  // createNewOrder() {
-  //   let isEmployeeOrder = false;
-  //   if (this.tokenStorageService.getRole() === 'ROLE_EMPLOYEE') {
-  //     isEmployeeOrder = true;
-  //   }
-  //   const orderCart: Order = {
-  //     userId: this.tokenStorageService.getUser().userId,
-  //     foodId: this.foodDetail.id,
-  //     quantity: this.quantity,
-  //     status: 1,
-  //     isEmployeeOrder
-  //   };
-  //   this.orderService.addCart(orderCart).subscribe(next => {
-  //     this.foodCartQuantity = 1;
-  //     Swal.fire({
-  //       text: 'Đã thêm vào giỏ hàng',
-  //       icon: 'success',
-  //       showConfirmButton: false,
-  //       timer: 1400
-  //     });
-  //   }, error => {
-  //     Swal.fire({
-  //       text: 'Vui lòng đăng nhập',
-  //       icon: 'error',
-  //       showConfirmButton: true
-  //     });
-  //     this.router.navigateByUrl('/login');
-  //   });
-  // }
 
   increase() {
     if (this.quantity < 100) {

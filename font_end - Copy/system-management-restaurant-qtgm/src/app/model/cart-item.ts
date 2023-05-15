@@ -1,5 +1,5 @@
 export interface CartItem {
-   id?: number;
+   orderId?: number;
    isSelected?: boolean;
    name?: string;
    description?: string;
@@ -9,4 +9,5 @@ export interface CartItem {
    quantity?: number;
    orderDetailId?: number;
    table?: number;
+   quantityFood?: number;
 }

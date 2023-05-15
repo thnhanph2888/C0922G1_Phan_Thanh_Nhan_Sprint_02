@@ -11,8 +11,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -31,12 +29,12 @@ public interface IOrderRepository extends JpaRepository<Order, Integer> {
             "    0," +
             "    :isEmployeeOrder)")
     void createCart(
-                    @Param("orderTime") String orderTime,
-                    @Param("reservationTime") String reservationTime,
-                    @Param("actualDelivery") String actualDelivery,
-                    @Param("customerId") Integer customerId,
-                    @Param("totalPrice") Double totalPrice,
-                    @Param("isEmployeeOrder") Boolean isEmployeeOrder
+            @Param("orderTime") String orderTime,
+            @Param("reservationTime") String reservationTime,
+            @Param("actualDelivery") String actualDelivery,
+            @Param("customerId") Integer customerId,
+            @Param("totalPrice") Double totalPrice,
+            @Param("isEmployeeOrder") Boolean isEmployeeOrder
     );
 
     @Query(nativeQuery = true, value = "SELECT LAST_INSERT_ID()")
@@ -50,6 +48,7 @@ public interface IOrderRepository extends JpaRepository<Order, Integer> {
                            @Param("drinksId") Integer drinksId,
                            @Param("foodId") Integer foodId,
                            @Param("orderId") Integer orderId);
+
     @Modifying
     @Query(nativeQuery = true, value = "update order_detail as odd \n" +
             "set odd.quantity = :quantity\n" +
@@ -58,8 +57,7 @@ public interface IOrderRepository extends JpaRepository<Order, Integer> {
                                    @Param("orderDetailId") Integer orderDetailId);
 
 
-
-    @Query(nativeQuery = true, value = "select od.id as Id,f.name as Name,\n" +
+    @Query(nativeQuery = true, value = "select od.id as OrderId,f.name as Name,\n" +
             "             f.description as Description,\n" +
             "             f.image as Image,\n" +
             "             f.price as Price,\n" +
@@ -76,13 +74,13 @@ public interface IOrderRepository extends JpaRepository<Order, Integer> {
                                            @Param("isEmployeeOrder") Boolean isEmployeeOrder,
                                            Pageable pageable);
 
-    @Query(nativeQuery = true, value = "select f.id as FoodId, odd.quantity as QuantityOrder," +
+    @Query(nativeQuery = true, value = "select f.id as FoodId, f.quantity as FoodQuantity, odd.quantity as QuantityOrder," +
             "             odd.id as Id" +
             "             from `orders` as od \n" +
             "             join `order_detail` as odd on od.id = odd.order_id \n" +
             "             join food as f on odd.food_id = f.id" +
             "              where od.id = :cartId")
-    List<IDetailOrderDTO> getFoodIdOfCart(@Param("cartId") Integer cartId);
+    List<IDetailOrderDTO> getCartItemByIdCart(@Param("cartId") Integer cartId);
 
     @Query(nativeQuery = true, value = "select od.id as Id,f.name as Name,\n" +
             "              f.description as Description,\n" +
@@ -111,26 +109,34 @@ public interface IOrderRepository extends JpaRepository<Order, Integer> {
             "             and (od.customer_id = coalesce(nullif(:customerId, 0), od.customer_id) or :customerId = 0)\n" +
             "             and od.status = 0")
     Integer getIdCartOfUser(@Param("customerId") Integer customerId,
-                          @Param("isEmployeeOrder") Boolean isEmployeeOrder);
+                            @Param("isEmployeeOrder") Boolean isEmployeeOrder);
 
     @Modifying
     @Query(nativeQuery = true, value = "insert into `orders` (is_employee_order, order_time, reservation_time, status, total_price, customer_id)\n" +
             "value (:isEmployeeOrder,\n" +
-            "      UTC_TIMESTAMP(),\n" +
+            "      :orderTime,\n" +
             "      :reservationTime,\n" +
             "      1,\n" +
             "      :totalPrice,\n" +
             "      :customerId)")
     void createNewOrderOnline(@Param("isEmployeeOrder") Boolean isEmployeeOrder,
+                              @Param("orderTime")Timestamp orderTime,
                               @Param("reservationTime") Timestamp reservationTime,
                               @Param("totalPrice") Double totalPrice,
                               @Param("customerId") Integer customerId);
+
     @Modifying
     @Query(nativeQuery = true, value = "update `order_detail` as odd\n" +
             "            set odd.order_id = :newOrderId\n " +
             "            where odd.id = :orderDetailId ")
     void moveOrderDetailToNewOrder(@Param("orderDetailId") Integer orderDetailId,
                                    @Param("newOrderId") Integer newOrderId);
+
+    @Modifying
+    @Query(nativeQuery = true, value = "update `food` as f join `order_detail` as odd on f.id = odd.food_id\n" +
+            "set f.quantity = f.quantity - odd.quantity\n" +
+            "where odd.id = :orderDetailId")
+    void updateQuantityFood(@Param("orderDetailId") Integer orderDetailId);
 
     @Query(nativeQuery = true, value = "select f.name as Name,  \n" +
             "       f.image as Image,\n" +
@@ -145,11 +151,23 @@ public interface IOrderRepository extends JpaRepository<Order, Integer> {
             "       from `orders` as od \n" +
             "       join order_detail as odd on od.id = odd.order_id\n" +
             "       join food as f on odd.food_id = f.id\n" +
-            "\t   where od.is_employee_order = coalesce(nullif(:isEmployeeOrder, 0), od.is_employee_order)\n" +
+            "\t     where od.is_employee_order = coalesce(nullif(:isEmployeeOrder, 0), od.is_employee_order)\n" +
             "       and (od.customer_id = coalesce(nullif(:customerId, 0), od.customer_id) or :customerId = 0)\n" +
             "       and od.status = 1")
     Page<IOrderDTO> getOrderListByUserId(@Param("customerId") Integer customerId,
-                               @Param("isEmployeeOrder") Boolean isEmployeeOrder,
-                                         Pageable pageable);
+                                            @Param("isEmployeeOrder") Boolean isEmployeeOrder,
+                                            Pageable pageable);
+    @Query(nativeQuery = true, value = "select f.quantity as FoodQuantity, odd.quantity as QuantityOrder\n" +
+            "                         from `order_detail` as odd \n" +
+            "                         join food as f on odd.food_id = f.id where odd.id = :orderDetailId")
+    IDetailOrderDTO getOrderDetailById(Integer orderDetailId);
 
+    @Query(nativeQuery = true, value = "select f.quantity from `food` as f where f.id = :foodId")
+    Integer findQuantityFoodById(@Param("foodId") Integer foodId);
+
+    Page<Order> findAllByCustomer_IdAndIsEmployeeOrderAndStatus(int customerId, boolean isEmployeeOrder, int status, Pageable pageable);
+
+    @Modifying
+    @Query(nativeQuery = true, value = "delete from `order_detail` as odd where odd.id = :id")
+    void deleteOrderDetailById(@Param("id") int id);
 }

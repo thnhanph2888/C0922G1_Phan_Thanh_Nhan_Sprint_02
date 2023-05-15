@@ -14,12 +14,13 @@
         <p class="my-price-cart">{{order.price}}</p>
       </div>
       <div class="col-mmd-2 d-flex align-items-center ">
-
+        <div class="my-control-quantity">
+          <input readonly [(ngModel)]="order.quantity" >
+        </div>
       </div>
-<!--      <div class="col-mmd-2 d-flex justify-content-center align-content-center">-->
-<!--        <input class="form-check-input" type="checkbox" [(ngModel)]="order.isSelected" (change)="getSelectedCartItem()">-->
-<!--        &lt;!&ndash;        <input type="checkbox">&ndash;&gt;-->
-<!--      </div>-->
+      <div class="col-mmd-2 d-flex align-items-center ">
+        <span>{{order.orderTime| date:'yyyy-MM-dd HH:mm' }}</span>
+      </div>
     </div>
 
     <div class="my-row justify-content-center pt-2"><button style="background-color: rgba(247,247,255,0.62)"
@@ -35,7 +36,7 @@
 <!--            <td>Tổng tiền phải thanh toán: </td>-->
 <!--          </tr>-->
 <!--        </table>-->
-        <h1>Detail oosd heere</h1>
+        <h1></h1>
       </div>
     </div>
   </div>

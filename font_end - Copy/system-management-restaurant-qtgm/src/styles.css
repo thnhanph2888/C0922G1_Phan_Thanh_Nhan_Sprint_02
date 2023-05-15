@@ -14,6 +14,10 @@
   background-color: #090909;
 }
 
+.my-button-load-more {
+  background-color: rgba(247, 247, 255, 0.44)
+}
+
 .my-row {
   --bs-gutter-x: 0rem;
   --bs-gutter-y: 0;
@@ -23,7 +27,7 @@
 
 .my-button-new {
   margin: 0.2em;
-  padding: 0.4em;
+  padding: 0.3em 0.4em 0.3em;
   border: 2px solid #a75a26;
   font-family: "Source Sans Pro", sans-serif;
   color: #ffffff;
@@ -34,6 +38,25 @@
 .my-button-new:hover {
   margin: 0.2em;
   border: 2px solid #a75a26;
+  font-family: "Source Sans Pro", sans-serif;
+  color: #ffffff;
+  background-image: linear-gradient(#d94400, #902800);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.my-button-back {
+  margin: 0.2em;
+  padding: 0.3em 0.4em 0.3em;
+  border: 2px solid rgba(163, 88, 37, 0.47);
+  font-family: "Source Sans Pro", sans-serif;
+  color: #ffffff;
+  background-image: linear-gradient(rgba(127, 39, 0, 0.5), rgba(78, 78, 78, 0.56));
+  transition: background-color 0.2s ease-in-out;
+}
+
+.my-button-back:hover {
+  margin: 0.2em;
+  border: 2px solid rgba(167, 90, 38, 0.45);
   font-family: "Source Sans Pro", sans-serif;
   color: #ffffff;
   background-image: linear-gradient(#d94400, #902800);

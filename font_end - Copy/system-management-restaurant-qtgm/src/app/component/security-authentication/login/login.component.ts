@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {LoginService} from '../service/login.service';
 import {Router} from '@angular/router';
 import {TokenStorageService} from '../service/token-storage.service';
@@ -48,9 +48,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loginService.login(this.loginForm.value).subscribe(
-      data => {
-        debugger
+    this.loginService.login(this.loginForm.value).subscribe(data => {
         if (this.loginForm.value.rememberMe) {
           this.tokenStorageService.saveTokenLocal(data.accessToken);
           this.tokenStorageService.saveUserLocal(data);
@@ -58,8 +56,6 @@ export class LoginComponent implements OnInit {
           this.tokenStorageService.saveTokenSession(data.accessToken);
           this.tokenStorageService.saveUserLocal(data);
         }
-
-        this.loginService.setStatusLogin(true);
         this.loginForm.reset();
         Swal.fire({
           text: 'Đăng nhập thành công',

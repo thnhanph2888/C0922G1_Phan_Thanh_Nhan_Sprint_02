@@ -11,8 +11,8 @@ export class OrderService {
   constructor(private httpClient: HttpClient) {
   }
 
-  addCart(order: Order): Observable<any> {
-    return this.httpClient.post<Order>(`http://localhost:8080/api/order/customer/addCart`, order);
+  addCart(order: Order): Observable<number> {
+    return this.httpClient.post<number>(`http://localhost:8080/api/order/customer/addCart`, order);
   }
 
   getListCartItem(customerId?: number,
@@ -35,7 +35,7 @@ export class OrderService {
   getOrderListOfUser(customerId?: number,
                      employeeId?: boolean,
                      page?: number,
-                     size?: number) {
+                     size?: number): Observable<any> {
     const params = {
       customerId,
       employeeId,
@@ -46,8 +46,11 @@ export class OrderService {
       .filter(([_, value]) => value !== undefined && value !== null)
       .map(([key, value]) => `${key}=${value}`)
       .join('&');
-    debugger
     return this.httpClient.get<any>(`http://localhost:8080/api/order/customer/getOrder?${query}`);
+  }
+
+  checkQuantityFood(listIdCartItem: number[]): Observable<any> {
+    return this.httpClient.post<any>(`http://localhost:8080/api/order/customer/checkQuantityFood`, listIdCartItem);
   }
 
   setCartToOrder(listIdCartItem: number[], order: Order): Observable<any> {
@@ -72,8 +75,11 @@ export class OrderService {
   }
 
   setQuantityCartItem(cartItemId: number, quantity: number): Observable<any> {
-    debugger
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(`http://localhost:8080/api/order/customer/setQuantityCartItem?cartItemId=${cartItemId}&quantity=${quantity}`);
+  }
+
+  deleteOrderDetailById(id: number): Observable<any> {
+    return this.httpClient.get<any>(`http://localhost:8080/api/order/customer/removeCartItem/${id}`);
   }
 }

@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   user: string;
   role: string;
   isLoggedIn = false;
-  totalCartItem: number;
+  totalCartItem = 0;
 
   constructor(private loginService: LoginService,
               private shareService: ShareService,
@@ -31,20 +31,6 @@ export class HeaderComponent implements OnInit {
     });
     this.getTotalCartItem();
     this.loadHeader();
-  }
-
-  addToken() {
-    const sessionId = 'session_id';
-    const token = 'access_token';
-    const expireAt = new Date();
-    this.loginService.addTokenToBlacklist(sessionId, token, expireAt).subscribe(
-      () => {
-        console.log('Token added to blacklist.');
-      },
-      (error) => {
-        console.log('Error adding token to blacklist: ' + error.message);
-      }
-    );
   }
 
   loadHeader(): void {
@@ -71,7 +57,6 @@ export class HeaderComponent implements OnInit {
     this.tokenStorageService.signOut();
     this.username = null;
     this.role = null;
-    this.loginService.setStatusLogin(false);
     this.shareService.sendClickEvent();
     this.router.navigateByUrl('');
     this.isLoggedIn = this.tokenStorageService.isLogger();

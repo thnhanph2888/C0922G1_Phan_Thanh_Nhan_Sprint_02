@@ -1,6 +1,8 @@
 package com.example.system_management_restaurant_qtgm.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,13 +15,13 @@ public class Account {
     private int id;
     private String username;
     private String password;
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "account")
     private Set<AccountRole> accountRoleSet;
-    @JsonIgnore
+    @JsonBackReference
     @OneToOne(mappedBy = "account")
     private Employee employee;
-    @JsonIgnore
+    @JsonBackReference
     @OneToOne(mappedBy = "account")
     private Customer customer;
 

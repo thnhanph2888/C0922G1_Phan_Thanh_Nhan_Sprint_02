@@ -4,8 +4,8 @@
       <div class="col-mmd-11 my-side-bar">
         <div class="content-side-bar">
           <div class="my-row justify-content-center mt-3">
-            <button [hidden]="isOrder" (click)="openOrder()" class="my-main-button">Đặt bàn</button>
-            <button [hidden]="!isOrder" (click)="closeOrder()" class="my-main-button">Đóng</button>
+            <button [hidden]="isOrder" (click)="openOrder()" class="my-button-new">Đặt bàn</button>
+            <button [hidden]="!isOrder" (click)="closeOrder()" class="my-button-new">Hủy đặt bàn</button>
           </div>
           <div [hidden]="!isOrder">
             <h5 style="margin-top: 1em">Danh sách món đã chọn</h5>
@@ -51,13 +51,6 @@
           <div class="col-mmd-12 my-search-bar">
             <div class="my-container-item-search">
 
-<!--              <div class="my-field-search">-->
-<!--                 <span class="my-field-title">Tên</span>-->
-<!--                 <div class="my-container-option">-->
-<!--                     <a class="my-option-search">Demo</a>-->
-<!--                     <a class="my-option-search">Demo</a>-->
-<!--                 </div>-->
-<!--              </div>-->
 
               <input  [(ngModel)]="foodNameSearch" class="my-input-search" placeholder="nhập tên món ăn..." >
               <select [(ngModel)]="foodPriceMinSearch" class="my-input-search" >
@@ -73,11 +66,9 @@
               </select>
               <button (click)="searchFood()" type="button" class="my-button-new" style="margin-left: 1em">
                 Tìm kiếm
-<!--                <i style="color: white" class="fa-solid fa-magnifying-glass"></i>-->
               </button>
               <button (click)="reset()" type="button" class="my-button-new" style="margin-left: 1em; margin-right: 1em">
                 Làm mới
-<!--                <i class="bi bi-arrow-clockwise"></i>-->
               </button>
             </div>
           </div>
@@ -94,17 +85,12 @@
               <div class="my-text-name">{{food.name}}</div>
               <div class="my-row">
                 <div class="my-text-price col-mmd-6" >{{food.price| number:'1.0-3'}} đ</div>
-                <div class="my-text-fire col-mmd-6" style="text-align: right">{{food.rate}} <i class="bi bi-fire"></i></div>
+                <div class="my-text-fire col-mmd-6" style="text-align: right"><i class="bi bi-fire m-icon-rate"></i>{{food.rate}} </div>
               </div>
             </div>
             <div [hidden]="isOrder" class="my-frame-card">
-              <button (click)="setInfoModalAddToCart(food.id,
-               food.name,
-                food.image,
-                 food.rate,
-                  food.price)"
+              <button (click)="setInfoModalAddToCart(food)"
                data-bs-toggle="modal" data-bs-target="#addCartModal" class="my-button-card">Thêm vào giỏ hàng</button>
-              <button class="my-button-card">Mua ngay</button>
               <button class="my-button-card" routerLink="/food/detail/{{food.id}}" >Xem chi tiết</button>
             </div>
             <div [hidden]="!isOrder" class="my-frame-card">
@@ -113,7 +99,14 @@
           </div>
         </div>
       </div>
-      <div class="my-row"><button style="background-color: rgba(243,243,248,0.23)" (click)="loadMore()">Xem thêm</button></div>
+      <div [hidden]="!hasNext" class="my-row"><button class="my-button-load-more" (click)="loadMore()">
+        Xem thêm
+        <img width="16" height="16" src="../../../assets/img/down-arrow.png" alt="icon">
+      </button>
+      </div>
+      <div [hidden]="foodList.length > 0" class="my-row justify-content-center pt-2" style="background-color: rgba(255,255,255,0.24)">
+        <h5>danh sách trống!</h5>
+      </div>
     </div>
   </div>
 </div>
@@ -144,33 +137,41 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Chọn số lượng</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button (click)="resetQuantity()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="col-mmd-6 d-flex p-0 justify-content-center">
-          <div class="my-card">
-            <img class="my-img" src="{{foodCartImage}}"
-                 alt="hinh anh">
-            <div class="my-card-body">
-              <div class="my-text-name">{{foodCartName}}</div>
-              <div class="my-row">
-                <div class="my-text-price col-mmd-6" >{{foodCartPrice| number:'1.0-3'}} đ</div>
-                <div class="my-text-fire col-mmd-6" style="text-align: right">{{foodCartRate}} <i class="bi bi-fire"></i></div>
+        <div class="col-mmd-12 d-flex p-0 justify-content-center">
+          <div class="col-mmd-6">
+            <div class="my-card ">
+              <img class="my-img" src="{{foodCartImage}}"
+                   alt="hinh anh">
+              <div class="my-card-body">
+                <div class="my-text-name">{{foodCartName}}</div>
+                <div class="my-row">
+                  <div class="my-text-price col-mmd-6" >{{foodCartPrice| number:'1.0-3'}} đ</div>
+                  <div class="my-text-fire col-mmd-6" style="text-align: right">{{foodCartRate}} <i class="bi bi-fire"></i></div>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
-        <div>
-          <button (click)="decrease()">-</button>
-          <span>{{foodCartQuantity}}</span>
-          <button (click)="increase()">+</button>
+        <div class="col-mmd-12 d-flex p-0 justify-content-center">
+          <div class="col-mmd-6 ps-3 pe-3">
+            <div class="my-control-quantity ">
+              <button (click)="decrease()">-</button>
+              <input [(ngModel)]="foodCartQuantity">
+              <button (click)="increase()">+</button>
+            </div>
+          </div>
         </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetQuantity()">Hủy</button>
-        <button (click)="addToCart()"
-          type="button" class="btn btn-primary" data-bs-dismiss="modal">Thêm</button>
+        <button [hidden]="isAddCartSuccess" type="button" class="my-button-back" data-bs-dismiss="modal" (click)="resetQuantity()">Hủy</button>
+        <button [hidden]="isAddCartSuccess" (click)="addToCart()"
+          type="button" class="my-button-new" >Thêm</button>
+        <button class="my-button-new" [hidden]="!isAddCartSuccess" data-bs-dismiss="modal" (click)="resetQuantity()">Hoàn tất</button>
       </div>
     </div>
   </div>

@@ -172,7 +172,7 @@
    padding: 0 1em 0;
    text-align: center;
    border-radius: 1em;
-   border: 1px solid #0c4128;
+   border: 1px solid #41180c;
 }
 
 .my-control-quantity input {
@@ -185,6 +185,7 @@
 }
 
 .my-control-quantity input:hover {
+  font-weight: bold;
   display: inline-block;
   width: 3em;
   height: 2em;
@@ -193,23 +194,26 @@
   border: 1px solid rgb(68, 16, 0);
 }
 
+.my-control-quantity input:focus {
+  font-weight: bold;
+}
+
 .my-control-quantity button {
   height: 2em;
   padding: 0.2em 0.6em 0.2em;
-  background-color: white;
+  background-color: #ffffff;
   border: 1px #ffffff;
 }
 
 .my-control-quantity button:hover {
+  font-weight: bold;
   padding: 0.2em 0.6em 0.2em;
-  background-color: #e0ffdb;
+  background-color: #fff2db;
   border: 1px #ffffff;
-  color: #ff0000;
 }
 
 .my-price-cart {
   font-weight: bold;
-  color: red;
 }
 
 /*checkbox*/
