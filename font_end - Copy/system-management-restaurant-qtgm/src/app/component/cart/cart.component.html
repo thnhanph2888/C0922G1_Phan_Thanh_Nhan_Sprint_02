@@ -1,7 +1,13 @@
 <div class="my-row justify-content-center" style="margin-bottom: 1em">
 
   <div class="col-mmd-8 justify-content-center" style=" padding: 1em 0 1em">
-
+    <div class="my-row d-flex" style="background-color: white; margin: 0 1em 0;
+     padding:1em; border: 1px solid #000000">
+      <div class="col-mmd-12 d-flex justify-content-end" >
+        <input class="form-check-input me-2" type="checkbox" (click)="setAllSelected()">
+         Chọn tất cả ({{cartItemList.length}})
+      </div>
+    </div>
     <div *ngFor="let cartItem of cartItemList" class="my-row cart-item" style="background-color: white; margin: 0 1em 0;
      padding:1em; border: 1px solid #000000">
        <div class="col-mmd-2">

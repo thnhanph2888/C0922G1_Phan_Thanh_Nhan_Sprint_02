@@ -16,9 +16,7 @@ import { FoodListComponent } from './component/food/food-list/food-list.componen
 import { FoodEditComponent } from './component/food/food-edit/food-edit.component';
 import {FoodCreateComponent} from './component/food/food-create/food-create.component';
 import { HomeComponent } from './component/home/home.component';
-import { OrderCreateComponent } from './component/order/order-create/order-create.component';
 import { OrderListComponent } from './component/order/order-list/order-list.component';
-import { OrderEditComponent } from './component/order/order-edit/order-edit.component';
 import { ChangePasswordComponent } from './component/security-authentication/change-password/change-password.component';
 import { ForgotPasswordComponent } from './component/security-authentication/forgot-password/forgot-password.component';
 import { RegisterComponent } from './component/security-authentication/register/register.component';
@@ -44,9 +42,7 @@ import { PersonalInformationComponent } from './component/personal-information/p
     FoodListComponent,
     FoodEditComponent,
     HomeComponent,
-    OrderCreateComponent,
     OrderListComponent,
-    OrderEditComponent,
     ChangePasswordComponent,
     ForgotPasswordComponent,
     RegisterComponent,

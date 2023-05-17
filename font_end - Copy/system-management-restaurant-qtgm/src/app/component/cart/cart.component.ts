@@ -23,6 +23,7 @@ export class CartComponent implements OnInit {
   hasContent: boolean;
   isCheckSuccess: boolean;
   deleteId: number;
+  setAll = false;
   constructor(private orderService: OrderService,
               private tokenStorageService: TokenStorageService,
               private shareService: ShareService) {
@@ -30,6 +31,18 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListCartItem();
+  }
+
+  setAllSelected() {
+    if (this.setAll) {
+      this.setAll = false;
+      this.cartItemList.map(cartItem => cartItem.isSelected = false);
+      this.calculateTotalMoneyItemSelected();
+    } else {
+      this.setAll = true;
+      this.cartItemList.map(cartItem => cartItem.isSelected = true);
+      this.calculateTotalMoneyItemSelected();
+    }
   }
 
   calculateTotalMoneyItemSelected() {

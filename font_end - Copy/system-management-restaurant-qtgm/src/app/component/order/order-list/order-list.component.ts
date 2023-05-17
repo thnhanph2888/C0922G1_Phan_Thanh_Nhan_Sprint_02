@@ -33,7 +33,6 @@ export class OrderListComponent implements OnInit {
   private getOrderList() {
     if (this.tokenStorageService.getRole() === 'ROLE_EMPLOYEE') {
       this.orderService.getOrderListOfUser(this.tokenStorageService.getUserId(), true, null, this.size).subscribe(orderPage => {
-        debugger
         this.orderPage = orderPage;
         if (this.orderPage == null) {
           this.orderList = null;
@@ -43,7 +42,6 @@ export class OrderListComponent implements OnInit {
       });
     } else {
       this.orderService.getOrderListOfUser(this.tokenStorageService.getUserId(), false, null, this.size).subscribe(orderPage => {
-        debugger
         this.orderPage = orderPage;
         if (this.orderPage == null) {
           this.orderList = null;
